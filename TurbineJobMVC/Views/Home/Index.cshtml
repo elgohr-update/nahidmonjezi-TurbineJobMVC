@@ -1,0 +1,89 @@
+﻿@model JobViewModel
+@{
+    ViewData["Title"] = "صفحه اصلی";
+}
+<div class="mt-5">
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card shadow p-1 mb-5 bg-white rounded helpinfo">
+                    <div class="card-body">
+                        <form asp-controller="Home" asp-action="index" asp-antiforgery="true" method="post">
+                            <div class="form-group ">
+                                <div class="input-group mb-3 ">
+                                    <div class="input-group-prepend ">
+                                        <label asp-for="AR" class="input-group-text px120" id="basic-addon1"></label>
+                                    </div>
+                                    <input type="text" class="form-control ltr" asp-for="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1">
+                                    <span class="invalid-feedback text-left d-block" asp-validation-for="AR"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label asp-for="Description" class="input-group-text px120" id="basic-addon1"></label>
+                                    </div>
+                                    <textarea type="text" class="form-control" asp-for="Description" style="resize:none" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8"></textarea>
+                                    <span class="invalid-feedback text-left d-block" asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label asp-for="PhoneNumber" class="input-group-text px120" id="basic-addon1"></label>
+                                    </div>
+                                    <input type="text" class="form-control ltr" asp-for="PhoneNumber" placeholder="تلفن تماس را وارد کنید" aria-label="PhoneNumber" aria-describedby="basic-addon1">
+                                    <span class="invalid-feedback text-left d-block" asp-validation-for="PhoneNumber"></span>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <dnt-captcha asp-captcha-generator-max="99"
+                                             asp-captcha-generator-min="10"
+                                             asp-captcha-generator-language="Persian"
+                                             asp-captcha-generator-display-mode="ShowDigits"
+                                             asp-use-relative-urls="true"
+                                             asp-placeholder="کد امنیتی را وارد نمایید"
+                                             asp-validation-error-message="کد امنیتی را به صورت عددی وارد نمایید"
+                                             asp-font-name="Tahoma"
+                                             asp-font-size="20"
+                                             asp-fore-color="#333333"
+                                             asp-back-color="#ccc"
+                                             asp-text-box-class="text-box form-control"
+                                             asp-text-box-template="<div class='input-group'><span class='input-group-prepend'><span class='input-group-text'><i class='fas fa-lock'></i></span></span>{0}</div>"
+                                             asp-validation-message-class="text-danger" asp-refresh-button-class="btn-sm refreshcaptcha" />
+                            </div>
+                            <button type="submit" class="btn btnStyle btn-lg btn-block mt-3">ارسال درخواست</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card shadow p-1 mb-5 rounded bg-warning helpinfo">
+                    <div class="card-header text-center align-middle">
+                        <h4>راهنما</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <h6 class="card-text"> &#128204; این سـامــانه صرفــاً جهت ثبت درخـــواستهـــای نرم افزاری،سخت افزاری و <br />&emsp;&ensp; لوازم مصرفی طراحی شده است .  </h6>
+                            <p class="card-text">1- شماره امــوال می بایــست بـــــصورت صحیح وارد شود، مثال : 2142020025.</p>
+                            <p class="card-text">2- شرح نیاز می بایست بصورت مختصر و مفید درج گردد.</p>
+                            <p class="card-text">3- تلفن تماس می بایست مربوط به کاربر درخواست کننده باشد.</p>
+                            <p class="card-text">4- پس از ثبت درخواست کد پیگیری را نزد خود نگهداری نمائید.</p>
+                            <p class="card-text">5- جهت ثبت درخواست لوازم مصرفی از اموال تحت اختیار استفــاده نمائید.   <br />&ensp;&ensp;مثال : جهت دریافت کارتریج از اموال چاپگر و جهت دریافت ماوس از اموال <br />&ensp;&ensp;رایانه استفاده نمائید.</p>
+                            <p class="card-text">6- همکـــاران گــــرامی در صـــــورت نیــاز مـــی توانند بــا شمــــــاره تلفنهــــای 24059 <br />&ensp;&ensp;  و 24907  تماس حاصل نمایند.</p>
+                        </div>
+                        <div class="row">
+                            <footer class="text-center">
+                                مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرایندی - سال 1398 <br /> <span>طراحی و توسعه توسط : <br /> </span><span> <b>ناهید منجزی ، مهدی سلیمانیان</b></span><a asp-area="" asp-controller="Home" asp-action="Privacy"></a>
+                            </footer>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
