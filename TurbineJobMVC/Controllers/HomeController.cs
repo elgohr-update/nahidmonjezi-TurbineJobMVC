@@ -28,7 +28,7 @@ namespace TurbineJobMVC.Controllers
         private readonly IDetection _detection;
         private readonly IService _service;
 
-        private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge" };
+        private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge", "Safari" };
         public HomeController(
             ILogger<HomeController> logger, 
             IUnitOfWork unitofwork,
