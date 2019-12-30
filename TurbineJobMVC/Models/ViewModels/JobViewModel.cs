@@ -30,6 +30,6 @@ namespace TurbineJobMVC.Models.ViewModels
         public string PhoneNumber { get; set; }
 
         [Display(Name = "شرح نیاز")]
-        public string NeedDescription => $"{Description}\r\n شماره تماس:{PhoneNumber}";
+        public string NeedDescription => $"{Description}\r\n( شماره تماس:{PhoneNumber})";
     }
 }
