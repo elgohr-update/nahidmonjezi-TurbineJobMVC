@@ -89,7 +89,12 @@ mark {
 }
 
 ol li:first-of-type {
-    list-style: none;
+    list-style: none !important;
     margin-right: -1em;
     /*some other header styles*/
+}
+
+ol li {
+    list-style:outside;
+    line-height:30px;
 }
