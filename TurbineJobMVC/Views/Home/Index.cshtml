@@ -1,9 +1,24 @@
 ﻿@model JobViewModel
 @{
-    ViewData["Title"] = "صفحه اصلی";
+    ViewData["Title"] = "فرم ارسال درخواست خدمات رایانه ای";
 }
-<div class="mt-5">
+<div class="mt-2">
     <div class="container ">
+        <div class="row mb-2">
+            <div class="col col-sm-9 mx-auto">
+                <form asp-controller="Home" asp-action="Search" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="txtSearch" name="id" placeholder="جهت جستجو اموال در اختیار، شماره پرسنلی خود را اینجا وارد و سپس بر روی دکمه جستجو کلیک نمایید">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-6">
                 <div class="card shadow p-1 mb-5 bg-white rounded helpinfo">
@@ -12,7 +27,7 @@
                             <div class="form-group ">
                                 <div class="input-group mb-3 ">
                                     <div class="input-group-prepend ">
-                                        <label asp-for="AR" class="input-group-text px120" id="basic-addon1"></label>
+                                        <label class="input-group-text" id="basic-addon1"><i class="fas fa-lg fa-memory"></i></label>
                                     </div>
                                     <input type="text" class="form-control ltr" asp-for="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1">
                                     <span class="invalid-feedback text-left d-block" asp-validation-for="AR"></span>
@@ -21,7 +36,7 @@
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <label asp-for="Description" class="input-group-text px120" id="basic-addon1"></label>
+                                        <label class="input-group-text" id="basic-addon1"><i class="fas fa-lg fa-comment-alt"></i></label>
                                     </div>
                                     <textarea type="text" class="form-control" asp-for="Description" style="resize:none" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8"></textarea>
                                     <span class="invalid-feedback text-left d-block" asp-validation-for="Description"></span>
@@ -30,15 +45,15 @@
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <label asp-for="PhoneNumber" class="input-group-text px120" id="basic-addon1"></label>
+                                        <label class="input-group-text" id="basic-addon1"><i class="fas fa-lg fa-phone-alt"></i></label>
                                     </div>
                                     <input type="text" class="form-control ltr" asp-for="PhoneNumber" placeholder="تلفن تماس را وارد کنید" aria-label="PhoneNumber" aria-describedby="basic-addon1">
                                     <span class="invalid-feedback text-left d-block" asp-validation-for="PhoneNumber"></span>
                                 </div>
                             </div>
                             <div class="form-group text-center">
-                                <dnt-captcha asp-captcha-generator-max="99"
-                                             asp-captcha-generator-min="10"
+                                <dnt-captcha asp-captcha-generator-max="999"
+                                             asp-captcha-generator-min="100"
                                              asp-captcha-generator-language="Persian"
                                              asp-captcha-generator-display-mode="ShowDigits"
                                              asp-use-relative-urls="true"
@@ -64,7 +79,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <h6 class="card-text"> &#128204; این سـامــانه صرفــاً جهت ثبت درخـــواستهـــای نرم افزاری،سخت افزاری و <br />&emsp;&ensp; لوازم مصرفی طراحی شده است .  </h6>
+                            <h6 class="card-text"> <i class="fas fa-pen-nib"></i> این سـامــانه صرفــاً جهت ثبت درخـــواستهـــای نرم افزاری،سخت افزاری و <br />&emsp;&ensp; لوازم مصرفی طراحی شده است .  </h6>
                             <p class="card-text">1- شماره امــوال می بایــست بـــــصورت صحیح وارد شود، مثال : 2142020025.</p>
                             <p class="card-text">2- شرح نیاز می بایست بصورت مختصر و مفید درج گردد.</p>
                             <p class="card-text">3- تلفن تماس می بایست مربوط به کاربر درخواست کننده باشد.</p>

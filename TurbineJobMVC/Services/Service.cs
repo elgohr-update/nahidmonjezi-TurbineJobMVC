@@ -49,5 +49,20 @@ namespace TurbineJobMVC.Services
             _unitofwork.SaveChanges();
             return newWorkOrder.WONo;
         }
+
+        public WorkOrderViewModel GetSingleWorkOrder(string Wono)
+        {
+            return _map.Map<WorkOrderViewModel>(_unitofwork.GetRepository<WorkOrder>().GetFirstOrDefault(predicate: q => q.WONo == Convert.ToInt64(Wono)));
+        }
+
+        public TahvilFormsViewModel GetTahvilForm(string amval)
+        {
+            return _map.Map<TahvilFormsViewModel>(_unitofwork.GetRepository<TahvilForms>().GetFirstOrDefault(predicate: q => q.AmvalNo.ToString() == amval));
+        }
+
+        public IList<TahvilFormsViewModel> GetTahvilForms(string regNo)
+        {
+            return _map.Map<IList<TahvilFormsViewModel>>(_unitofwork.GetRepository<TahvilForms>().GetAll(predicate: q => q.RegisterNo == regNo));
+        }
     }
 }

@@ -9,5 +9,8 @@ namespace TurbineJobMVC.Services
     public interface IService
     {
         long addWorkOrder(JobViewModel JobModel);
+        WorkOrderViewModel GetSingleWorkOrder(string Wono);
+        TahvilFormsViewModel GetTahvilForm(string amval);
+        IList<TahvilFormsViewModel> GetTahvilForms(string regNo);
     }
 }

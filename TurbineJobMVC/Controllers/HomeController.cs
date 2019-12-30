@@ -80,16 +80,21 @@ namespace TurbineJobMVC.Controllers
         
         public IActionResult Tracking(string id)
         {
-            var workOrder = _unitofwork.GetRepository<WorkOrderTBL>().Find(Convert.ToInt64(id));
+            var workOrder = _service.GetSingleWorkOrder(id);
             if (workOrder!=null)
             {
-                ViewData["TahvilInfo"] = _map.Map<TahvilFormsViewModel>(_unitofwork.GetRepository<TahvilForms>().GetFirstOrDefault(predicate: q => q.AmvalNo.ToString() == workOrder.Amval));
+                ViewData["TahvilInfo"] = _service.GetTahvilForm(workOrder.Amval);
                 return View(workOrder);
             }
             else
             {
                 return NotFound();
             }
+        }
+
+        public IActionResult Search(string id)
+        {
+            return View(_service.GetTahvilForms(id));
         }
 
         public IActionResult Privacy()

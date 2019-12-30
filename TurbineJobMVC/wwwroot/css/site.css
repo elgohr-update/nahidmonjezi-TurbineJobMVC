@@ -7,15 +7,6 @@
 * {
     font-family: Shabnam !important;
 }
-.px120 {
-  width:120px;  
-  
-}
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
 
 .helpinfo {
     /*opacity:0.85;*/
@@ -35,11 +26,13 @@ a.navbar-brand {
 :-moz-placeholder { /* Firefox 18- */
     color: #c7c5c5 !important;
     direction: rtl !important;
+    text-align:right;
 }
 
 ::-moz-placeholder { /* Firefox 19+ */
     color: #c7c5c5 !important;
     direction: rtl !important;
+    text-align: right;
 }
 
 :-ms-input-placeholder {
@@ -79,14 +72,17 @@ footer {
 .refreshcaptcha:hover{
     text-decoration:none !important;
 }
+
 .trackCSS{
     opacity:0.7;
     color:#6f0e0e;
 }
+
 .btnStyle {
     background-color: #3d65cb !important;
     color: white !important;
 }
+
 mark {
     background-color: #fadb7f !important;
     border-radius: 5px;

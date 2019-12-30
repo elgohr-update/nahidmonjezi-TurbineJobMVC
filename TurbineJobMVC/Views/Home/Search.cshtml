@@ -1,0 +1,10 @@
+﻿@model IList<TahvilFormsViewModel>
+@{
+    ViewData["Title"] = "اقلام تحویلی...";
+}
+
+@foreach(var form in Model)
+{
+    <p>@form.AmvalNo</p>
+}
+
