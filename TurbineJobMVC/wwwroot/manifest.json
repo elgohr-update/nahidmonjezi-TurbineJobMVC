@@ -1,4 +1,9 @@
 {
-  "display": "standalone", /* Could be "fullscreen", "standalone", "minimal-ui", or "browser" */
-  "orientation": "portrait" /* Could be "landscape" or "portrait" */
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "icons": [
+  ]
 }
