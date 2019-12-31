@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
-    <None Include="wwwroot\Image\BG_Transparent.png" />
   </ItemGroup>
 
   <ItemGroup>
