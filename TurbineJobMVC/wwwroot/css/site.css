@@ -26,7 +26,6 @@ html,body{
     }
 }*/
 .helpinfo {
-    /*opacity:0.85;*/
     color: #850b0b !important;
     height:100% !important;
 }
@@ -62,7 +61,9 @@ html,body{
 body {
    background:fixed center no-repeat;
    background-size:cover;
-   background-image:url('../Image/BG_Transparent_Blur.png');
+   background-image:url('../Image/BG-Web.jpg');
+   background-size:100%;
+
 }
 
 .ltr{
@@ -114,4 +115,11 @@ ol li:first-of-type {
 ol li {
     list-style:outside;
     line-height:30px;
+}
+.cardop {
+    background-color: rgba(255,255,255,0.7) !important;
+
+}
+.helpop {
+    background-color: rgba(248, 248, 248, 0.7) !important;
 }
