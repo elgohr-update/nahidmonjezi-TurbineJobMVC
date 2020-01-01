@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY *.sln .
 COPY TurbineJobMVC/*.csproj ./TurbineJobMVC/
-RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
+RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json -s https://www.myget.org/F/redhat-dotnet/api/v3/index.json
 
 COPY TurbineJobMVC/. ./TurbineJobMVC/
 WORKDIR /app/TurbineJobMVC
