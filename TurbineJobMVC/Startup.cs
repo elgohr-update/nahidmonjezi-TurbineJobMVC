@@ -14,6 +14,7 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using TurbineJobMVC.Services;
 using DNTCaptcha.Core;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace TurbineJobMVC
 {
@@ -36,7 +37,16 @@ namespace TurbineJobMVC
             services.AddScoped<IService, Service>();
             services.AddSession();
             services.AddDNTCaptcha(options => options.UseCookieStorageProvider());
-            services.AddResponseCompression();
+            services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = System.IO.Compression.CompressionLevel.Optimal;
+            });
+
+            services.AddResponseCompression(action =>
+            {
+                action.EnableForHttps = true;
+                action.Providers.Add<BrotliCompressionProvider>();
+            });
             services.AddControllersWithViews();
         }
 
@@ -53,11 +63,12 @@ namespace TurbineJobMVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseResponseCompression();
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseSession();
+            
             //app.UseStatusCodePages();
             app.UseEndpoints(endpoints =>
             {

@@ -20,7 +20,7 @@ namespace TurbineJobMVC
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseLinuxTransport().UseStartup<Startup>();
                 });
     }
 }
