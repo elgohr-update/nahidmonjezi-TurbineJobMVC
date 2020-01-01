@@ -10,7 +10,7 @@ jobs:
       with:
         dotnet-version: 3.1.100
     - name: dotnet Restore
-      run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json -s https://www.myget.org/F/redhat-dotnet/api/v3/index.json
+      run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
     - name: Build with dotnet
       run: dotnet build ./TurbineJobMVC.sln --configuration Release
     - name: Publish 
