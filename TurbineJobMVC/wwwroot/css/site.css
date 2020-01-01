@@ -1,30 +1,19 @@
 ﻿* {
     font-family: Shabnam !important;
 }
-html,body{
-    margin:0;
-    padding:0;
+
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
-/*@media only screen and (orientation:landscape) {
-    #turn {
-        display: block;
-    }
-
-    #container {
-        display: none;
-    }
+body {
+    background: fixed center no-repeat;
+    background-size:cover;
+    background-image: url('../Image/BG-Web.jpg');
+    background-size: 100% 100%;
 }
 
-@media only screen and (orientation:portrait) {
-    #turn {
-        display: none;
-    }
-
-    #container {
-        display: block;
-    }
-}*/
 .helpinfo {
     color: #850b0b !important;
     height:100% !important;
@@ -57,13 +46,6 @@ html,body{
 }
 .menu {
     color: #0026ff !important;
-}
-body {
-   background:fixed center no-repeat;
-   background-size:cover;
-   background-image:url('../Image/BG-Web.jpg');
-   background-size:100%;
-
 }
 
 .ltr{
@@ -117,9 +99,8 @@ ol li {
     line-height:30px;
 }
 .cardop {
-    background-color: rgba(255,255,255,0.7) !important;
-
+    background-color: rgba(255,255,255,0.75) !important;
 }
 .helpop {
-    background-color: rgba(248, 248, 248, 0.7) !important;
+    background-color: rgba(248, 248, 248, 0.75) !important;
 }
