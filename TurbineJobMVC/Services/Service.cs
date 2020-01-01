@@ -62,7 +62,7 @@ namespace TurbineJobMVC.Services
 
         public IList<TahvilFormsViewModel> GetTahvilForms(string regNo)
         {
-            return _map.Map<IList<TahvilFormsViewModel>>(_unitofwork.GetRepository<TahvilForms>().GetAll(predicate: q => q.RegisterNo == regNo));
+            return _map.Map<IList<TahvilFormsViewModel>>(_unitofwork.GetRepository<TahvilForms>().GetAll(predicate: q => q.RegisterNo == regNo , orderBy: q=> q.OrderByDescending(c=> c.AmvalNo)));
         }
     }
 }

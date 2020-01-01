@@ -18,6 +18,9 @@ body {
     color: #850b0b !important;
     height:100% !important;
 }
+.textInputColor {
+    color:black !important;
+}
 
 ::-webkit-input-placeholder {
     color: #c7c5c5 !important;
@@ -104,3 +107,6 @@ ol li {
 .helpop {
     background-color: rgba(248, 248, 248, 0.75) !important;
 }
+
+
+

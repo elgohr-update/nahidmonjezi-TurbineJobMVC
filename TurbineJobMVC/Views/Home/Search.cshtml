@@ -3,8 +3,35 @@
     ViewData["Title"] = "اقلام تحویلی...";
 }
 
-@foreach(var form in Model)
-{
-    <p>@form.AmvalNo</p>
-}
+   
+    <table class="table border  helpop mt-5  text-center">
+        <thead class="thead-dark ">
+            <tr>
+
+                <th class="border border-white text-center " scope="col">*</th>
+                <th class="border border-white text-center" scope="col">نوع</th>
+                <th class="border border-white text-center" scope="col">شماره اموال</th>
+                <th class="border border-white text-center" scope="col">تاریخ تحویل</th>
+            </tr>
+        </thead>
+        <tbody ">
+            @foreach (var form in Model)
+            {
+                <tr class="border border-white">
+
+                    <td><i class="@form.Icon"></i></td>
+                    <td>@form.PartName</td>
+                    <td>@(form.AmvalNo.ToString() == "0" ? "":form.AmvalNo.ToString() )</td>
+                    <td>@form.DateTahvil</td>
+
+                </tr>
+            }
+
+
+
+        </tbody>
+    </table>
+
+
+
 
