@@ -11,14 +11,8 @@
       "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
       "wwwroot/lib/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css",
       "wwwroot/lib/shabnam-font/dist/font-face.css",
-      "wwwroot/lib/font-awesome/css/all.min.css",
+      "wwwroot/lib/fontawesome-pro-5.12.0-web/css/all.min.css",
       "wwwroot/css/site.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/lib/font-awesome/css/all.min.css",
-    "inputFiles": [
-      "wwwroot/lib/font-awesome/css/all.css"
     ]
   },
   {

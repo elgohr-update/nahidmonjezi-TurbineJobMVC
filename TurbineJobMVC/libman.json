@@ -15,11 +15,6 @@
       "destination": "wwwroot/lib/shabnam-font/"
     },
     {
-      "provider": "cdnjs",
-      "library": "font-awesome@5.11.2",
-      "destination": "wwwroot/lib/font-awesome/"
-    },
-    {
       "library": "jquery-ajax-unobtrusive@3.2.6",
       "destination": "wwwroot/lib/jquery-ajax-unobtrusive/"
     }
