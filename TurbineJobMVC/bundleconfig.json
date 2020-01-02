@@ -29,5 +29,12 @@
       "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/fontawesome.min.js",
+    "inputFiles": [
+      "wwwroot/lib/fontawesome-pro-5.12.0-web/js/fontawesome.min.js",
+      "wwwroot/lib/fontawesome-pro-5.12.0-web/js/solid.min.js"
+    ]
   }
 ]
