@@ -40,3 +40,9 @@ jobs:
         docker push registry.heroku.com/$HEROKU_APP_NAME/web
         curl https://cli-assets.heroku.com/install.sh | sh
         heroku container:release web -a $HEROKU_APP_NAME
+    - name: Notify slack
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: pullreminders/slack-action@master
+      with:
+        args: '{\"channel\":\"CQJRS20TU\",\"text\":\"Upload site is done.\"}'
