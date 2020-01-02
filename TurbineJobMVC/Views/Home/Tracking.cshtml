@@ -6,32 +6,30 @@
 
 
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-10  mx-auto">
-            <div class="card shadow p-1 mb-5 rounded trackCSS mt-1">
-                <h5 class="text-center mt-3 ">  درخواست شما ارسال گردید، کد پیگیری شما به شرح ذیل می باشد </h5>
-                <br />
-                <h1 class="text-center border border-danger w-25 mx-auto" >@Model.WONo</h1>
-                <br/>
-                <h5 class="ml-3">نام متقاضی :<span>@tahvil.DeliverCode</span> </h5>
-                <br />
-                <h5 class="ml-3">شماره اموال :<span>@tahvil.AmvalNo</span> </h5>
-                <br />
-                <h5 class="ml-3">نوع اموال :<span>@tahvil.PartName,@tahvil.PartModelName</span> </h5>
-                <br />
-                <h5 class="ml-3">شرح درخواست :<span>@Model.NeedDescription</span> </h5>
-                <br/>
+    <div class="container mt-auto">
+        <div class="row">
+            <div class="col-lg-10  mx-auto">
+                <div class="card shadow p-1 mb-5 rounded trackCSS mt-1">
+                    <h3 class="mx-auto mt-5 text-center"><span>درخواست شما با کد پیگیری </span><span><mark>@tahvil.Wono</mark>&ensp;</span><span>ارسال گردید </span></h3>
+                    <br />
+                    <br />
+                    <h5 class="ml-3">نام متقاضی:<span>&ensp;<b>@tahvil.DeliverCode</b></span> </h5>
+                    <br />
+                    <h5 class="ml-3">شماره اموال:<span>&ensp;<b>@tahvil.AmvalNo</b></span></h5>
+                    <br />
+                    <h5 class="ml-3">نوع اموال:<span>&ensp;<b>@tahvil.PartName,@tahvil.PartModelName</b></span> </h5>
+                    <br />
+                    <h5 class="ml-3">شرح درخواست:</h5>
+                    <h6 class="ml-3">@Model.NeedDescription</h6>
+                    <br />
+                </div>
             </div>
-
         </div>
-
+        <div>
+            <partial name="footer" />
+        </div>
+        
     </div>
-</div>
 
-<div class="row">
-    <footer class="card-footer text-center">
-        <b>مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرایندی - سال 1398 </b> <br /> <span>طراحی و توسعه توسط : <br /> </span><span> <b>ناهید منجزی ، مهدی سلیمانیان</b></span><a asp-area="" asp-controller="Home" asp-action="Privacy"></a>
-    </footer>
-</div>
+
 

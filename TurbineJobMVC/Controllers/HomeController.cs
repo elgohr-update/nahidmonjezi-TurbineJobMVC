@@ -56,13 +56,13 @@ namespace TurbineJobMVC.Controllers
                     IsNumericErrorMessage = "مقدار وارد شده می بایست عددی باشد",
                     CaptchaGeneratorLanguage = Language.Persian,
                     CaptchaGeneratorDisplayMode = DisplayMode.ShowDigits)]
-        public IActionResult Index(JobViewModel JobModel)
+        public async Task<IActionResult> Index(JobViewModel JobModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var Wono = _service.addWorkOrder(JobModel);
+                    var Wono = await _service.addWorkOrder(JobModel);
                     if (Wono == -1) return BadRequest();
                     else 
                         return RedirectToAction("Tracking", new { id = Wono.ToString() });
@@ -78,12 +78,12 @@ namespace TurbineJobMVC.Controllers
             }
         }
         
-        public IActionResult Tracking(string id)
+        public async Task<IActionResult> Tracking(string id)
         {
-            var workOrder = _service.GetSingleWorkOrder(id);
+            var workOrder = await _service.GetSingleWorkOrder(id);
             if (workOrder!=null)
             {
-                ViewData["TahvilInfo"] = _service.GetTahvilForm(workOrder.Amval);
+                ViewData["TahvilInfo"] = await _service.GetTahvilForm(workOrder.Amval);
                 return View(workOrder);
             }
             else
@@ -92,9 +92,9 @@ namespace TurbineJobMVC.Controllers
             }
         }
 
-        public IActionResult Search(string id)
+        public async Task<IActionResult> Search(string id)
         {
-            return View(_service.GetTahvilForms(id));
+            return View(await _service.GetTahvilForms(id));
         }
 
         public IActionResult Privacy()

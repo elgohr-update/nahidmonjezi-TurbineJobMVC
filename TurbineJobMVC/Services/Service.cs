@@ -20,7 +20,7 @@ namespace TurbineJobMVC.Services
             _unitofwork = unitofwork;
             _map = map;
         }
-        public long addWorkOrder(JobViewModel JobModel)
+        public async Task<long> addWorkOrder(JobViewModel JobModel)
         {
             var repo = _unitofwork.GetRepository<WorkOrderTBL>();
             var newWorkOrder = _map.Map<WorkOrderTBL>(JobModel);
@@ -45,24 +45,24 @@ namespace TurbineJobMVC.Services
                 newWorkOrder.WONo = -1;
             }
 
-            repo.Insert(newWorkOrder);
+            await repo.InsertAsync(newWorkOrder);
             _unitofwork.SaveChanges();
             return newWorkOrder.WONo;
         }
 
-        public WorkOrderViewModel GetSingleWorkOrder(string Wono)
+        public async Task<WorkOrderViewModel> GetSingleWorkOrder(string Wono)
         {
-            return _map.Map<WorkOrderViewModel>(_unitofwork.GetRepository<WorkOrder>().GetFirstOrDefault(predicate: q => q.WONo == Convert.ToInt64(Wono)));
+            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.WONo == Convert.ToInt64(Wono)));
         }
 
-        public TahvilFormsViewModel GetTahvilForm(string amval)
+        public async Task<TahvilFormsViewModel> GetTahvilForm(string amval)
         {
-            return _map.Map<TahvilFormsViewModel>(_unitofwork.GetRepository<TahvilForms>().GetFirstOrDefault(predicate: q => q.AmvalNo.ToString() == amval));
+            return _map.Map<TahvilFormsViewModel>(await _unitofwork.GetRepository<TahvilForms>().GetFirstOrDefaultAsync(predicate: q => q.AmvalNo.ToString() == amval));
         }
 
-        public IList<TahvilFormsViewModel> GetTahvilForms(string regNo)
+        public async Task<IList<TahvilFormsViewModel>> GetTahvilForms(string regNo)
         {
-            return _map.Map<IList<TahvilFormsViewModel>>(_unitofwork.GetRepository<TahvilForms>().GetAll(predicate: q => q.RegisterNo == regNo , orderBy: q=> q.OrderByDescending(c=> c.AmvalNo)));
+            return _map.Map<IList<TahvilFormsViewModel>>(await _unitofwork.GetRepository<TahvilForms>().GetAllAsync(predicate: q => q.RegisterNo == regNo , orderBy: q=> q.OrderByDescending(c=> c.AmvalNo)));
         }
     }
 }
