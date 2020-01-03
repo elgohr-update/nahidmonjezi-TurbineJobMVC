@@ -17,6 +17,9 @@ using DNTCaptcha.Core;
 using Microsoft.AspNetCore.ResponseCompression;
 using Raven.Client.Documents;
 using Raven.StructuredLog;
+using Raven.Client.Http;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace TurbineJobMVC
 {
@@ -83,6 +86,7 @@ namespace TurbineJobMVC
 
         private IDocumentStore CreateRavenDocStore()
         {
+            RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
             var docStore = new DocumentStore
             {
                 Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
@@ -91,6 +95,11 @@ namespace TurbineJobMVC
             };
             docStore.Initialize();
             return docStore;
+        }
+
+        private bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
         }
     }
 }
