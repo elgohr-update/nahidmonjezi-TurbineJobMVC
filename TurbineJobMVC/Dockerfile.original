@@ -1,5 +1,0 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS base
-RUN apt-get update && apt-get install -y vim
-COPY ./bin/Release/netcoreapp2.2/publish	/publish
-WORKDIR /publish
-ENTRYPOINT ["dotnet", "NISOC.TurbineOH.UI.Web.dll"]
