@@ -20,6 +20,7 @@ using Raven.StructuredLog;
 using Raven.Client.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace TurbineJobMVC
 {
@@ -37,6 +38,7 @@ namespace TurbineJobMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDetection();
+            services.AddDataProtection();
             services.AddAutoMapper(typeof(PCStockDBMappingProfiles));
             services
                 .AddEntityFrameworkSqlServer()
