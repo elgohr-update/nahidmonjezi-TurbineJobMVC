@@ -15,23 +15,28 @@ using AutoMapper;
 using TurbineJobMVC.Services;
 using DNTCaptcha.Core;
 using Microsoft.AspNetCore.ResponseCompression;
+using Raven.Client.Documents;
+using Raven.StructuredLog;
 
 namespace TurbineJobMVC
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostEnvironment host)
         {
             Configuration = configuration;
+            hostEnvironment = host;
         }
 
         public IConfiguration Configuration { get; }
+        private IHostEnvironment hostEnvironment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDetection();
             services.AddAutoMapper(typeof(PCStockDBMappingProfiles));
             services
+                .AddEntityFrameworkSqlServer()
                 .AddDbContext<PCStockDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PCStockDBConnectionString")))
                 .AddUnitOfWork<PCStockDBContext>();
             services.AddScoped<IService, Service>();
@@ -47,6 +52,7 @@ namespace TurbineJobMVC
                 action.EnableForHttps = true;
                 action.Providers.Add<BrotliCompressionProvider>();
             });
+            services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
             services.AddControllersWithViews();
         }
 
@@ -66,16 +72,25 @@ namespace TurbineJobMVC
             app.UseSession();
             app.UseResponseCompression();
             app.UseRouting();
-
             app.UseAuthorization();
-            
-            //app.UseStatusCodePages();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private IDocumentStore CreateRavenDocStore()
+        {
+            var docStore = new DocumentStore
+            {
+                Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
+                Database = Configuration.GetSection("RavenDBSettings:LOGDB").Value,
+                Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/free.aiki.client.certificate.with.password.pfx", "D7511C44414CAA552B425F39DAE8CA6")
+            };
+            docStore.Initialize();
+            return docStore;
         }
     }
 }
