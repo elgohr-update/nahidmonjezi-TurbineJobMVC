@@ -55,7 +55,8 @@ namespace TurbineJobMVC
                 action.EnableForHttps = true;
                 action.Providers.Add<BrotliCompressionProvider>();
             });
-            services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
+            if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
+                services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
             services.AddControllersWithViews();
         }
 
@@ -90,7 +91,7 @@ namespace TurbineJobMVC
             var docStore = new DocumentStore
             {
                 Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
-                Database = Configuration.GetSection("RavenDBSettings:LOGDB").Value,
+                Database = Configuration.GetSection("RavenDBSettings:CollectionName").Value,
                 Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/free.aiki.client.certificate.with.password.pfx", "D7511C44414CAA552B425F39DAE8CA6")
             };
             docStore.Initialize();
