@@ -10,6 +10,7 @@ using AutoMapper;
 using DNTCaptcha.Core;
 using DNTCaptcha.Core.Providers;
 using MD.PersianDateTime.Standard;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TurbineJobMVC.Models;
@@ -27,6 +28,7 @@ namespace TurbineJobMVC.Controllers
         private readonly IMapper _map;
         private readonly IDetection _detection;
         private readonly IService _service;
+        private readonly IDataProtectionProvider _provider;
 
         private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge", "Safari" };
         public HomeController(
@@ -34,13 +36,15 @@ namespace TurbineJobMVC.Controllers
             IUnitOfWork unitofwork,
             IMapper map,
             IDetection detection,
-            IService service)
+            IService service,
+            IDataProtectionProvider provider)
         {
             _logger = logger;
             _unitofwork = unitofwork;
             _map = map;
             _detection = detection;
             _service = service;
+            _provider = provider;
         }
 
         public IActionResult Index()
@@ -92,6 +96,7 @@ namespace TurbineJobMVC.Controllers
             }
         }
 
+        [ResponseCache(Duration = 100, VaryByQueryKeys = new[] { "*" })]
         public async Task<IActionResult> Search(string id)
         {
             return View(await _service.GetTahvilForms(id));

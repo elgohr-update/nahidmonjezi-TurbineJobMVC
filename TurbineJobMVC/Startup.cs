@@ -21,6 +21,7 @@ using Raven.Client.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using Microsoft.AspNetCore.DataProtection;
+using System.IO;
 
 namespace TurbineJobMVC
 {
@@ -38,7 +39,9 @@ namespace TurbineJobMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDetection();
-            services.AddDataProtection();
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(@"etc/keys/"))
+                .SetApplicationName("TurbineJobMVC");
             services.AddAutoMapper(typeof(PCStockDBMappingProfiles));
             services
                 .AddEntityFrameworkSqlServer()
@@ -46,6 +49,7 @@ namespace TurbineJobMVC
                 .AddUnitOfWork<PCStockDBContext>();
             services.AddScoped<IService, Service>();
             services.AddSession();
+            services.AddResponseCaching();
             services.AddDNTCaptcha(options => options.UseCookieStorageProvider());
             services.Configure<BrotliCompressionProviderOptions>(options =>
             {
@@ -79,6 +83,7 @@ namespace TurbineJobMVC
             app.UseResponseCompression();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseResponseCaching();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
