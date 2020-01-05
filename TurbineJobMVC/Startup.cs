@@ -42,7 +42,7 @@ namespace TurbineJobMVC
         {
             services.AddDetection();
             services.AddDataProtection()
-                .PersistKeysToFileSystem(new DirectoryInfo(@"etc/keys/"))
+                .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("TurbineJobMVC");
             services.AddAutoMapper(typeof(PCStockDBMappingProfiles));
             services
@@ -52,8 +52,6 @@ namespace TurbineJobMVC
                     options.UseSqlServer(Configuration.GetConnectionString("PCStockDBConnectionString"));
                 })
                 .AddUnitOfWork<PCStockDBContext>();
-            services.AddScoped<IService, Service>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();
             services.AddResponseCaching();
             services.AddDNTCaptcha(options => options.UseCookieStorageProvider());
@@ -69,6 +67,9 @@ namespace TurbineJobMVC
             });
             if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
                 services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
+
+            services.AddScoped<IService, Service>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
         }
 
