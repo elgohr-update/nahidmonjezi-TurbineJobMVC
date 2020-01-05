@@ -62,7 +62,7 @@ namespace TurbineJobMVC.Services
 
         public async Task<IList<TahvilFormsViewModel>> GetTahvilForms(string regNo)
         {
-            return _map.Map<IList<TahvilFormsViewModel>>(await _unitofwork.GetRepository<TahvilForms>().GetAllAsync(predicate: q => q.RegisterNo == regNo , orderBy: q=> q.OrderByDescending(c=> c.AmvalNo)));
+            return _map.Map<IList<TahvilFormsViewModel>>(await _unitofwork.GetRepository<TahvilForms>().GetAllAsync(predicate: q => q.RegisterNo == regNo, orderBy: q => q.OrderByDescending(c => c.AmvalNo)));
         }
     }
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace TurbineJobMVC.Models
 {
     public class ErrorViewModel

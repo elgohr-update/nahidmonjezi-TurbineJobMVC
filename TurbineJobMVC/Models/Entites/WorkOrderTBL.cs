@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TurbineJobMVC.Models.Entites
+﻿namespace TurbineJobMVC.Models.Entites
 {
     public class WorkOrderTBL
     {

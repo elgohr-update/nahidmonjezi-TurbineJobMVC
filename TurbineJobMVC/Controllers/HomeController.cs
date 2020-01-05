@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using DNTCaptcha.Core;
 using DNTCaptcha.Core.Providers;
-using MD.PersianDateTime.Standard;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using TurbineJobMVC.Models;
-using TurbineJobMVC.Models.Entites;
 using TurbineJobMVC.Models.ViewModels;
 using TurbineJobMVC.Services;
 using Wangkanai.Detection;
@@ -32,7 +27,7 @@ namespace TurbineJobMVC.Controllers
 
         private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge", "Safari" };
         public HomeController(
-            ILogger<HomeController> logger, 
+            ILogger<HomeController> logger,
             IUnitOfWork unitofwork,
             IMapper map,
             IDetection detection,
@@ -68,10 +63,10 @@ namespace TurbineJobMVC.Controllers
                 {
                     var Wono = await _service.addWorkOrder(JobModel);
                     if (Wono == -1) return BadRequest();
-                    else 
+                    else
                         return RedirectToAction("Tracking", new { id = Wono.ToString() });
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return BadRequest();
                 }
@@ -81,11 +76,11 @@ namespace TurbineJobMVC.Controllers
                 return View(JobModel);
             }
         }
-        
+
         public async Task<IActionResult> Tracking(string id)
         {
             var workOrder = await _service.GetSingleWorkOrder(id);
-            if (workOrder!=null)
+            if (workOrder != null)
             {
                 ViewData["TahvilInfo"] = await _service.GetTahvilForm(workOrder.Amval);
                 return View(workOrder);

@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TurbineJobMVC.Models.Entites;
 using TurbineJobMVC.Models.EntitiesConfigure;
 
@@ -20,14 +17,14 @@ namespace TurbineJobMVC.Models
         public DbSet<WorkOrder> WorkOrder { get; set; }
         public DbSet<TahvilForms> TahvilForms { get; set; }
 
-        public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) :base()
+        public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base()
         {
             Audit.Core.Configuration.Setup().UseNullProvider();
             _logger = logger;
             _accessor = accessor;
         }
 
-        public PCStockDBContext(DbContextOptions options, ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) :base(options)
+        public PCStockDBContext(DbContextOptions options, ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base(options)
         {
             Audit.Core.Configuration.Setup().UseNullProvider();
             _logger = logger;
@@ -57,10 +54,10 @@ namespace TurbineJobMVC.Models
         {
             try
             {
-                _logger.LogInformation("Audit event recorded: {event}", new 
-                { 
-                    IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(), 
-                    Event = auditScope.Event 
+                _logger.LogInformation("Audit event recorded: {event}", new
+                {
+                    IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
+                    Event = auditScope.Event
                 });
             }
             catch (Exception)

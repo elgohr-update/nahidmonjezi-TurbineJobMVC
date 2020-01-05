@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TurbineJobMVC.Models.Entites
+﻿namespace TurbineJobMVC.Models.Entites
 {
     public class TahvilForms
     {
         public long CodeTahvil { get; set; }
-        public Int16 TypeTahvil { get; set; }
+        public short TypeTahvil { get; set; }
         public string DateTahvil { get; set; }
         public string TypeName { get; set; }
         public string DeliverCode { get; set; }
@@ -19,7 +14,7 @@ namespace TurbineJobMVC.Models.Entites
         public long Wono { get; set; }
         public long AmvalNo { get; set; }
         public long PartNumber { get; set; }
-        public Int16 PartNumberCount { get; set; }
+        public short PartNumberCount { get; set; }
         public string Serial { get; set; }
         public string Des { get; set; }
         public string PartName { get; set; }

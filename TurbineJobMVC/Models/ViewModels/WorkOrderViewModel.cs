@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TurbineJobMVC.Models.ViewModels
+﻿namespace TurbineJobMVC.Models.ViewModels
 {
     public class WorkOrderViewModel
     {
