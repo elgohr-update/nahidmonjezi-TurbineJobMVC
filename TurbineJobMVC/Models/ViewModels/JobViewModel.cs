@@ -20,6 +20,7 @@ namespace TurbineJobMVC.Models.ViewModels
 
         [Display(Name = "شرح نیاز")]
         [Required(ErrorMessage = "شرح نیاز را وارد نمایید.")]
+        [StringLength(1000, MinimumLength = 20, ErrorMessage = "شرح خود را به صورا مختصر و با مفهوم بیان نمایید")]
         [NotMapped]
         public string Description { get; set; }
 

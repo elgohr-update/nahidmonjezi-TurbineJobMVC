@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y vim apt-utils libgdiplus libc6-dev tzda
 ENV TZ=Asia/Tehran
 ENV DEBIAN_FRONTEND=noninteractive
 # ENV ASPNETCORE_ENVIRONMENT Production
+RUN mkdir -p /etc/keys
 WORKDIR /app
 COPY --from=build /app/TurbineJobMVC/out ./
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet TurbineJobMVC.dll

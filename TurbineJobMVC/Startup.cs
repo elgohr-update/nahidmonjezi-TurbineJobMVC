@@ -22,6 +22,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using Microsoft.AspNetCore.DataProtection;
 using System.IO;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace TurbineJobMVC
 {
@@ -45,9 +47,13 @@ namespace TurbineJobMVC
             services.AddAutoMapper(typeof(PCStockDBMappingProfiles));
             services
                 .AddEntityFrameworkSqlServer()
-                .AddDbContext<PCStockDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PCStockDBConnectionString")))
+                .AddDbContext<PCStockDBContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("PCStockDBConnectionString"));
+                })
                 .AddUnitOfWork<PCStockDBContext>();
             services.AddScoped<IService, Service>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();
             services.AddResponseCaching();
             services.AddDNTCaptcha(options => options.UseCookieStorageProvider());

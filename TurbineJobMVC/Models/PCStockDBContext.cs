@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Audit.Core;
+using Audit.EntityFramework;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +12,31 @@ using TurbineJobMVC.Models.EntitiesConfigure;
 
 namespace TurbineJobMVC.Models
 {
-    public class PCStockDBContext : DbContext
+    public class PCStockDBContext : AuditDbContext
     {
+        private readonly ILogger<PCStockDBContext> _logger;
+        private readonly IHttpContextAccessor _accessor;
         public DbSet<WorkOrderTBL> WorkOrderTBL { get; set; }
         public DbSet<WorkOrder> WorkOrder { get; set; }
         public DbSet<TahvilForms> TahvilForms { get; set; }
 
-        public PCStockDBContext():base()
+        public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) :base()
         {
-
+            Audit.Core.Configuration.Setup().UseNullProvider();
+            _logger = logger;
+            _accessor = accessor;
         }
 
-        public PCStockDBContext(DbContextOptions options):base(options)
+        public PCStockDBContext(DbContextOptions options, ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) :base(options)
         {
+            Audit.Core.Configuration.Setup().UseNullProvider();
+            _logger = logger;
+            _accessor = accessor;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.EnableSensitiveDataLogging(false);
         }
 
 
@@ -35,6 +46,29 @@ namespace TurbineJobMVC.Models
             modelBuilder.ApplyConfiguration<WorkOrderTBL>(new WorkOrderTBLConfigure());
             modelBuilder.ApplyConfiguration<WorkOrder>(new BaseViewConfigure<WorkOrder>());
             modelBuilder.ApplyConfiguration<TahvilForms>(new TahvilFormsConfigure());
+        }
+
+        public override void OnScopeCreated(AuditScope auditScope)
+        {
+            Database.BeginTransaction();
+        }
+
+        public override void OnScopeSaving(AuditScope auditScope)
+        {
+            try
+            {
+                _logger.LogInformation("Audit event recorded: {event}", new 
+                { 
+                    IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(), 
+                    Event = auditScope.Event 
+                });
+            }
+            catch (Exception)
+            {
+                Database.CurrentTransaction.Rollback();
+                throw;
+            }
+            Database.CurrentTransaction.Commit();
         }
     }
 }
