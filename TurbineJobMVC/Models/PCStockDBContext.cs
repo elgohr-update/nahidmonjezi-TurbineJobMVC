@@ -52,20 +52,11 @@ namespace TurbineJobMVC.Models
 
         public override void OnScopeSaving(AuditScope auditScope)
         {
-            try
+            _logger.LogInformation("Audit event recorded: {event}", new
             {
-                _logger.LogInformation("Audit event recorded: {event}", new
-                {
-                    IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
-                    Event = auditScope.Event
-                });
-            }
-            catch (Exception)
-            {
-                Database.CurrentTransaction.Rollback();
-                throw;
-            }
-            Database.CurrentTransaction.Commit();
+                IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
+                Event = auditScope.Event
+            });
         }
     }
 }
