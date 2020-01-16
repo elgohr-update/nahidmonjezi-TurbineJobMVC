@@ -16,8 +16,12 @@
 </head>
 <body class="rtl">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 justify-content-between">
             <a class="navbar-brand menu text-wrap" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Image/Naft-Transparent-02.png" height="40" width="50" />سامانه <mark>ثبت درخواست رایانه ای</mark> مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرآیندی</a>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="کد رهگیری را وارد نمایید" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">رهگیری</button>
+            </form>
         </nav>
     </header>
     <div class="container">
