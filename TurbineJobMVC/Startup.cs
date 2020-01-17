@@ -41,7 +41,6 @@ namespace TurbineJobMVC
                 .SetApplicationName("TurbineJobMVC");
             services.AddAutoMapper(typeof(PCStockDBMappingProfiles));
             services
-                .AddEntityFrameworkSqlServer()
                 .AddDbContext<PCStockDBContext>(options =>
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("PCStockDBConnectionString"));
