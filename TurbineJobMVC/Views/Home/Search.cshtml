@@ -13,32 +13,37 @@
                 <b>@Model.First().DeliverCode</b><span> به شماره پرسنلی <b>@Model.First().RegisterNo</b></span><span> اطلاعات اموال تحویلی شما به شرح ذیل می باشد</span>
             </div>
         </div>
+
+        <div class="row">
+            <table class="table table-bordered table-hover searchcard text-center">
+                <thead class="thead-dark ">
+                    <tr>
+                        <th class="border border-white text-center " scope="col">*</th>
+                        <th class="border border-white text-center" scope="col">نوع</th>
+                        <th class="border border-white text-center" scope="col">شماره اموال</th>
+                        <th class="border border-white text-center" scope="col">تاریخ تحویل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var form in Model)
+                    {
+                        <tr class="border border-white">
+                            <td><i class="@form.Icon"></i></td>
+                            <td>@form.PartName</td>
+                            <td>@form.AmvalNo</td>
+                            <td>@form.DateTahvil</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">اطلاعاتی یافت نشد</div>
     }
 }
 
-<div class="row">
-    <table class="table table-bordered table-hover searchcard text-center">
-        <thead class="thead-dark ">
-            <tr>
-                <th class="border border-white text-center " scope="col">*</th>
-                <th class="border border-white text-center" scope="col">نوع</th>
-                <th class="border border-white text-center" scope="col">شماره اموال</th>
-                <th class="border border-white text-center" scope="col">تاریخ تحویل</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var form in Model)
-            {
-                <tr class="border border-white">
-                    <td><i class="@form.Icon"></i></td>
-                    <td>@form.PartName</td>
-                    <td>@form.AmvalNo</td>
-                    <td>@form.DateTahvil</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
 
 <partial name="footer" />
 
