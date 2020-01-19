@@ -20,9 +20,15 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 justify-content-between">
             <a class="navbar-brand menu text-wrap" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Image/Naft-Transparent-02.png" height="40" width="50" />سامانه <mark>ثبت درخواست رایانه ای</mark> مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرآیندی</a>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="کد رهگیری را وارد نمایید" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">رهگیری</button>
+            <form class="form-inline my-auto d-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtWonoSearch" name="txtWonoSearch" placeholder="رهگیری درخواست" data-toggle="tooltip" title="جهت پیگیری آخرین وضعیت درخواست ارسالی کد رهگیری را اینجا وارد نمایید">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-success">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
             </form>
         </nav>
     </header>
@@ -50,6 +56,7 @@
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/fontawesome.min.js" async></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
