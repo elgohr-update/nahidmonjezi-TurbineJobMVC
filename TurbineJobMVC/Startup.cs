@@ -85,6 +85,7 @@ namespace TurbineJobMVC
             app.UseRouting();
             app.UseAuthorization();
             app.UseResponseCaching();
+            app.UseStatusCodePagesWithReExecute("/Home/Error{0}");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

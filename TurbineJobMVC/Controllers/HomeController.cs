@@ -101,14 +101,18 @@ namespace TurbineJobMVC.Controllers
         {
             return View();
         }
-
-        [Route("500")]
-        [Route("404")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public IActionResult Error(string errCode)
+        {
+            if (errCode == "500" | errCode == "404") 
+            { 
+            }
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
         public IActionResult InCompatibleBrowser()
         {
             return View();
