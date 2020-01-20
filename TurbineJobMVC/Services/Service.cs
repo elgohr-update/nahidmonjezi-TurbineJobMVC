@@ -23,6 +23,7 @@ namespace TurbineJobMVC.Services
         public async Task<long> addWorkOrder(JobViewModel JobModel)
         {
             var repo = _unitofwork.GetRepository<WorkOrderTBL>();
+            var repoWorkOrderComment = _unitofwork.GetRepository<WorkOrderDailyReportTBL>();
             var newWorkOrder = _map.Map<WorkOrderTBL>(JobModel);
             newWorkOrder.WOTime = DateTime.Now.ToString("HH:MM");
             newWorkOrder.WODate = DateExtensions.ConvertToWesternArbicNumerals(new PersianDateTime(DateTime.Now).ToShortDateString());
@@ -39,13 +40,21 @@ namespace TurbineJobMVC.Services
             if (ARInfo != null)
             {
                 newWorkOrder.AskerCode = ARInfo.DevilerCodeOrigin;
+                var workOrderReport = new WorkOrderDailyReportTBL()
+                {
+                    Wono = newWorkOrder.WONo,
+                    ReportID = Guid.NewGuid(),
+                    ReportDate = DateTime.Now,
+                    ReportComment = "درخواست کاربر دریافت گردید"
+                };
+                await repo.InsertAsync(newWorkOrder);
+                await repoWorkOrderComment.InsertAsync(workOrderReport);
+                await _unitofwork.SaveChangesAsync(); 
             }
             else
             {
                 newWorkOrder.WONo = -1;
             }
-            await repo.InsertAsync(newWorkOrder);
-            var result = await _unitofwork.SaveChangesAsync();
             return newWorkOrder.WONo;
         }
 

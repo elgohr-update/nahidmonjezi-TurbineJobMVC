@@ -45,16 +45,15 @@ namespace TurbineJobMVC.Models
             modelBuilder.ApplyConfiguration<WorkOrder>(new BaseViewConfigure<WorkOrder>());
             modelBuilder.ApplyConfiguration<TahvilForms>(new TahvilFormsConfigure());
             modelBuilder.ApplyConfiguration<WorkOrderDailyReportTBL>(new WorkOrderDailyReportTBLConfigure());
-
         }
 
         public override void OnScopeSaving(AuditScope auditScope)
         {
-            _logger.LogInformation("Audit event recorded: {event}", new
-            {
-                IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
-                Event = auditScope.Event
-            });
+            //_logger.LogInformation("Audit event recorded: {event}", new
+            //{
+                //IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
+                //Event = auditScope.Event
+            //});
         }
     }
 }

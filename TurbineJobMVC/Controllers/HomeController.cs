@@ -120,6 +120,11 @@ namespace TurbineJobMVC.Controllers
 
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {
+            var workOrder = await _service.GetSingleWorkOrder(WonoSearch);
+            if (workOrder != null)
+            {
+                ViewData["WorkOrderInfo"] = workOrder;
+            }
             return View(await _service.GetWorkOrderReport(WonoSearch));
         }
     }
