@@ -71,10 +71,6 @@ body {
     text-decoration:none !important;
 }
 
-.trackCSS {
-    background-color: rgba(248, 248, 248, 0.8) !important;
-}
-
 .btnStyle {
     background-color: #3d65cb !important;
     color: white !important;
@@ -88,7 +84,6 @@ mark {
 ol li:first-of-type {
     list-style: none !important;
     margin-right: -1em;
-    /*some other header styles*/
 }
 
 ol li {
@@ -99,12 +94,16 @@ ol li {
     background-color: rgba(255,255,255,0.33) !important;
 }
 .helpop {
-    background-color: rgba(248, 248, 248, 0.20);
+    background-color: rgba(248, 248, 248, 0.20) !important;
 }
 
 .searchcard {
-    background-color: rgba(248, 248, 248, 0.95  );
+    background-color: rgba(248, 248, 248, 0.95) !important;
 }
+.trackCSS {
+    background-color: rgba(248, 248, 248, 0.95) !important;
+}
+
 .developer-info {
     background-color: rgba(248, 248, 248, 0.63) !important;
     border-radius:5px;
