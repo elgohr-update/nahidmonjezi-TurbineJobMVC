@@ -44,9 +44,8 @@ namespace TurbineJobMVC.Services
             {
                 newWorkOrder.WONo = -1;
             }
-
             await repo.InsertAsync(newWorkOrder);
-            _unitofwork.SaveChanges();
+            var result = await _unitofwork.SaveChangesAsync();
             return newWorkOrder.WONo;
         }
 
