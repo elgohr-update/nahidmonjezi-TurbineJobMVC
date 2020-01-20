@@ -9,7 +9,7 @@ using TurbineJobMVC.Models.EntitiesConfigure;
 
 namespace TurbineJobMVC.Models
 {
-    public class PCStockDBContext : DbContext 
+    public class PCStockDBContext : AuditDbContext
     {
         private readonly ILogger<PCStockDBContext> _logger;
         private readonly IHttpContextAccessor _accessor;
@@ -19,12 +19,14 @@ namespace TurbineJobMVC.Models
 
         public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base()
         {
+            Audit.Core.Configuration.Setup().UseNullProvider();
             _logger = logger;
             _accessor = accessor;
         }
 
         public PCStockDBContext(DbContextOptions options, ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base(options)
         {
+            Audit.Core.Configuration.Setup().UseNullProvider();
             _logger = logger;
             _accessor = accessor;
         }
@@ -41,6 +43,15 @@ namespace TurbineJobMVC.Models
             modelBuilder.ApplyConfiguration<WorkOrderTBL>(new WorkOrderTBLConfigure());
             modelBuilder.ApplyConfiguration<WorkOrder>(new BaseViewConfigure<WorkOrder>());
             modelBuilder.ApplyConfiguration<TahvilForms>(new TahvilFormsConfigure());
+        }
+
+        public override void OnScopeSaving(AuditScope auditScope)
+        {
+            _logger.LogInformation("Audit event recorded: {event}", new
+            {
+                IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
+                Event = auditScope.Event
+            });
         }
     }
 }
