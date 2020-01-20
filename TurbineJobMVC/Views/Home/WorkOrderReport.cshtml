@@ -1,21 +1,26 @@
 ﻿@model IList<WorkOrderDailyReportViewModel>
 
-<div class="row ltr">
-    @if (Model != null)
-    {
-        @if (Model.Count > 0)
+    <div class="row ltr">
+        @if (Model != null)
         {
-            @foreach (var form in Model)
+            @if (Model.Count > 0)
             {
                 <div class="timeline">
-                    <div class="containerTL rightTL">
-                        <div class="contentTL">
-                            <h2>@form.ReportDate</h2>
-                            <p>@form.ReportComment</p>
+
+                    @for (int i = 0; i <= Model.Count - 1; i++)
+                    {
+                        <div class="containerTL @(i%2==0?"leftTL":"rightTL")">
+                            <div class="contentTL rtl">
+                                <h5>@(new PersianDateTime(Model[i].ReportDate).ToLongDateTimeString())</h5>
+                                <p>@Model[i].ReportComment</p>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             }
+            else
+            {
+                <div class="alert alert-danger">اطلاعاتی یافت نشد</div>
+            }
         }
-    }
-</div>
+    </div>
