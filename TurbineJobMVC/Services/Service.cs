@@ -28,8 +28,8 @@ namespace TurbineJobMVC.Services
             newWorkOrder.WOTime = DateTime.Now.ToString("HH:MM");
             newWorkOrder.WODate = DateExtensions.ConvertToWesternArbicNumerals(new PersianDateTime(DateTime.Now).ToShortDateString());
             newWorkOrder.RequestDate = newWorkOrder.WODate;
-            var records = repo.GetAll(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4));
-            if (records.Any())
+            var recordsExists = repo.Exists(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4));
+            if (recordsExists)
                 newWorkOrder.WONo = repo.GetAll(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4)).Max(q => q.WONo) + 1;
             else
                 newWorkOrder.WONo = Convert.ToInt64((newWorkOrder.WODate.Substring(0, 4) + "000001"));
@@ -50,7 +50,7 @@ namespace TurbineJobMVC.Services
                 await repo.InsertAsync(newWorkOrder);
                 await _unitofwork.SaveChangesAsync();
                 await repoWorkOrderComment.InsertAsync(workOrderReport);
-                await _unitofwork.SaveChangesAsync(); 
+                await _unitofwork.SaveChangesAsync();
             }
             else
             {
