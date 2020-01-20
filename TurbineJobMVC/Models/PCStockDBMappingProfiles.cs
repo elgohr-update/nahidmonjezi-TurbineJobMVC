@@ -13,6 +13,7 @@ namespace TurbineJobMVC.Models
                 .ForMember(x => x.AR, opt => opt.MapFrom(x => x.Amval)).ReverseMap();
             CreateMap<WorkOrder, WorkOrderViewModel>().ReverseMap();
             CreateMap<TahvilForms, TahvilFormsViewModel>().ReverseMap();
+            CreateMap<WorkOrderDailyReportTBL, WorkOrderDailyReportViewModel>().ReverseMap();
         }
     }
 }

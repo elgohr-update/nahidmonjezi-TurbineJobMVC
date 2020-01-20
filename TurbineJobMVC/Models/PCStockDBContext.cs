@@ -16,6 +16,7 @@ namespace TurbineJobMVC.Models
         public DbSet<WorkOrderTBL> WorkOrderTBL { get; set; }
         public DbSet<WorkOrder> WorkOrder { get; set; }
         public DbSet<TahvilForms> TahvilForms { get; set; }
+        public DbSet<WorkOrderDailyReportTBL> WorkOrderDailyReportTBL{ get; set; }
 
         public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base()
         {
@@ -43,6 +44,8 @@ namespace TurbineJobMVC.Models
             modelBuilder.ApplyConfiguration<WorkOrderTBL>(new WorkOrderTBLConfigure());
             modelBuilder.ApplyConfiguration<WorkOrder>(new BaseViewConfigure<WorkOrder>());
             modelBuilder.ApplyConfiguration<TahvilForms>(new TahvilFormsConfigure());
+            modelBuilder.ApplyConfiguration<WorkOrderDailyReportTBL>(new WorkOrderDailyReportTBLConfigure());
+
         }
 
         public override void OnScopeSaving(AuditScope auditScope)

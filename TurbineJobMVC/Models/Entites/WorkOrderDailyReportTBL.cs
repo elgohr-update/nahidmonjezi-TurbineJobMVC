@@ -7,7 +7,7 @@ namespace TurbineJobMVC.Models.Entites
     {
         public Guid ReportID  { get; set; }
         public long Wono { get; set; }
-        public string ReportDate { get; set; }
+        public DateTime ReportDate { get; set; }
         public string ReportComment { get; set; }
     }
 }

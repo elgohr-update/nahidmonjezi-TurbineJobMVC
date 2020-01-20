@@ -10,5 +10,7 @@ namespace TurbineJobMVC.Services
         Task<WorkOrderViewModel> GetSingleWorkOrder(string Wono);
         Task<TahvilFormsViewModel> GetTahvilForm(string amval);
         Task<IList<TahvilFormsViewModel>> GetTahvilForms(string regNo);
+       
+        Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono);
     }
 }

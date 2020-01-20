@@ -118,5 +118,9 @@ namespace TurbineJobMVC.Controllers
             return View();
         }
 
+        public async Task<IActionResult> WorkOrderReport(string WonoSearch)
+        {
+            return View(await _service.GetWorkOrderReport(WonoSearch));
+        }
     }
 }

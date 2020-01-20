@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\site.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\TimeLine.min.css" />
   </ItemGroup>
 
   <ItemGroup>

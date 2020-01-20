@@ -63,5 +63,9 @@ namespace TurbineJobMVC.Services
         {
             return _map.Map<IList<TahvilFormsViewModel>>(await _unitofwork.GetRepository<TahvilForms>().GetAllAsync(predicate: q => q.RegisterNo == regNo, orderBy: q => q.OrderByDescending(c => c.AmvalNo)));
         }
+        public async Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono)
+        {
+            return _map.Map<IList<WorkOrderDailyReportViewModel>>(await _unitofwork.GetRepository<WorkOrderDailyReportTBL>().GetAllAsync(predicate: q => q.Wono == Convert.ToInt64(Wono), orderBy: q => q.OrderByDescending(c => c.ReportDate)));
+        }
     }
 }
