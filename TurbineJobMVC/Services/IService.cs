@@ -12,5 +12,7 @@ namespace TurbineJobMVC.Services
         Task<IList<TahvilFormsViewModel>> GetTahvilForms(string regNo);
        
         Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono);
+
+        bool IsNumberic(string number);
     }
 }

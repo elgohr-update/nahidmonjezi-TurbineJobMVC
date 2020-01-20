@@ -2,6 +2,7 @@
 using AutoMapper;
 using DNTCaptcha.Core;
 using DNTCaptcha.Core.Providers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -62,13 +63,13 @@ namespace TurbineJobMVC.Controllers
                 try
                 {
                     var Wono = await _service.addWorkOrder(JobModel);
-                    if (Wono == -1) return BadRequest();
+                    if (Wono == -1) throw new Exception();
                     else
                         return RedirectToAction("Tracking", new { id = Wono.ToString() });
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return BadRequest();
+                    return BadRequest(ex);
                 }
             }
             else
@@ -101,18 +102,13 @@ namespace TurbineJobMVC.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Error(string errCode)
-        {
-            if (errCode == "500" | errCode == "404") 
-            { 
-            }
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
         public IActionResult InCompatibleBrowser()
         {
             return View();
@@ -120,6 +116,7 @@ namespace TurbineJobMVC.Controllers
 
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {
+            if (!_service.IsNumberic(WonoSearch)) return BadRequest();
             var workOrder = await _service.GetSingleWorkOrder(WonoSearch);
             if (workOrder != null)
             {

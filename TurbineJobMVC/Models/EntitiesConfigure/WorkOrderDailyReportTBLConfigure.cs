@@ -10,6 +10,7 @@ namespace TurbineJobMVC.Models.EntitiesConfigure
         public void Configure(EntityTypeBuilder<WorkOrderDailyReportTBL> builder)
         {
             builder.HasKey(x => x.ReportID);
+            builder.Property(x => x.ReportComment).HasMaxLength(4000);
             builder.HasQueryFilter(x => !String.IsNullOrEmpty(x.ReportComment));
         }
     }

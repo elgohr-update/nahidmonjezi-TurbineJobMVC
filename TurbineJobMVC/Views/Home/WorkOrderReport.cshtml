@@ -27,13 +27,16 @@
                 {
                     <div class="containerTL @(i % 2 == 0 ? "rightTL" : "leftTL")">
                         <div class="contentTL rtl">
-                            <h5>@(new PersianDateTime(Model[i].ReportDate).ToLongDateTimeString())</h5>
+                            <h6 class="text-secondary"><i class="fas fa-calendar-check"></i><span> @(new PersianDateTime(Model[i].ReportDate).ToLongDateTimeString())</span></h6>
                             <p>@Model[i].ReportComment</p>
-                            <h6>
-                                <span>انجام دهنده:</span>
-                                <span>
-                                    <mark>واحد عملیات</mark>
-                                </span>
+                            <h6 class="text-primary">
+                                <i class="fas fa-person-carry"></i><span> انجام دهنده:</span>
+                                @if (workorderInfo != null)
+                                {
+                                    <span>
+                                        <mark>@workorderInfo.OprCode</mark>
+                                    </span>
+                                }
                             </h6>
                         </div>
                     </div>

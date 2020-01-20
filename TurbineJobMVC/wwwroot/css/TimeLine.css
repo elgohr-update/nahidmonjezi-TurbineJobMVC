@@ -84,7 +84,7 @@
     border-radius: 6px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
     .timeline::after {
         left: 31px;
     }

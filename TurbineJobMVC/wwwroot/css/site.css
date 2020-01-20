@@ -9,8 +9,8 @@ html, body {
 
 body {
     background: fixed center no-repeat;
-    background-size:cover;
-    background-image: url('../Image/BG-Web.jpg');
+    background-size: cover;
+    background-image: url('../Image/ferdinand-stohr-RNx36we97kg-unsplash.jpg');
     background-size: 100% 100%;
 }
 
@@ -103,8 +103,9 @@ ol li {
 }
 
 .searchcard {
-    background-color: rgba(248, 248, 248, 0.83);
+    background-color: rgba(248, 248, 248, 0.95  );
 }
 .developer-info {
     background-color: rgba(248, 248, 248, 0.63) !important;
+    border-radius:5px;
 }

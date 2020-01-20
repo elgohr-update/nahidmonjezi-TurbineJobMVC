@@ -49,11 +49,11 @@ namespace TurbineJobMVC.Models
 
         public override void OnScopeSaving(AuditScope auditScope)
         {
-            //_logger.LogInformation("Audit event recorded: {event}", new
-            //{
-                //IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
-                //Event = auditScope.Event
-            //});
+            _logger.LogInformation("Audit event recorded: {event}", new
+            {
+                IPAddress = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
+                Event = auditScope.Event
+            });
         }
     }
 }

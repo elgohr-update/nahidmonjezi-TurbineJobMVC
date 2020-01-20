@@ -48,6 +48,7 @@ namespace TurbineJobMVC.Services
                     ReportComment = "درخواست کاربر دریافت گردید"
                 };
                 await repo.InsertAsync(newWorkOrder);
+                await _unitofwork.SaveChangesAsync();
                 await repoWorkOrderComment.InsertAsync(workOrderReport);
                 await _unitofwork.SaveChangesAsync(); 
             }
@@ -75,6 +76,12 @@ namespace TurbineJobMVC.Services
         public async Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono)
         {
             return _map.Map<IList<WorkOrderDailyReportViewModel>>(await _unitofwork.GetRepository<WorkOrderDailyReportTBL>().GetAllAsync(predicate: q => q.Wono == Convert.ToInt64(Wono), orderBy: q => q.OrderByDescending(c => c.ReportDate)));
+        }
+
+        public bool IsNumberic(string number)
+        {
+            double tempInt = 0;
+            return double.TryParse(number, out tempInt);
         }
     }
 }
