@@ -6,12 +6,20 @@
 {
     <div class="row">
         <div class="alert alert-success mx-auto">
-            <span>
-                <b>@workorderInfo.AskerCode</b>
-            </span><span> درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b> </span>برای انجام به </span>
-            <span>
-                <b>@workorderInfo.OprCode</b>
-            </span><span> ارجاع داده شده است</span>
+            @if (workorderInfo.OprCodeName != null)
+            {
+                <span>
+                    <b>@workorderInfo.AskerCode</b>
+                </span><span> درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b> </span>برای انجام به </span>
+                <span>
+                    <b>@workorderInfo.OprCode</b>
+                </span><span> ارجاع داده شده است</span>
+            }
+            else
+            {
+                <span><b>@workorderInfo.AskerCode</b></span><span> برای درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b></span></span>
+                <span><b>انجام دهنده کار تعیین نشده است</b></span>
+            }
         </div>
     </div>
 }
