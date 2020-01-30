@@ -58,7 +58,7 @@ namespace TurbineJobMVC
             services.AddResponseCompression(action =>
             {
                 action.EnableForHttps = true;
-                action.Providers.Add<BrotliCompressionProvider>();
+                action.Providers.Add<GzipCompressionProvider>();
             });
             if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
                 services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
