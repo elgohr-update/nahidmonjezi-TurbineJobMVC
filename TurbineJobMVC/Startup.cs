@@ -16,6 +16,7 @@ using Raven.Client.Http;
 using Raven.StructuredLog;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using TurbineJobMVC.Models;
@@ -50,14 +51,19 @@ namespace TurbineJobMVC
             services.AddSession();
             services.AddResponseCaching();
             services.AddDNTCaptcha(options => options.UseCookieStorageProvider());
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
             services.Configure<BrotliCompressionProviderOptions>(options =>
             {
-                options.Level = System.IO.Compression.CompressionLevel.Optimal;
+                options.Level = CompressionLevel.Optimal;
             });
 
             services.AddResponseCompression(action =>
             {
                 action.EnableForHttps = true;
+                action.Providers.Add<BrotliCompressionProvider>();
                 action.Providers.Add<GzipCompressionProvider>();
             });
             if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
