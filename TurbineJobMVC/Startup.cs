@@ -89,6 +89,7 @@ namespace TurbineJobMVC
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = ctx =>
@@ -115,7 +116,6 @@ namespace TurbineJobMVC
                 }
             });
             app.UseSession();
-            app.UseResponseCompression();
             app.UseRouting();
             app.UseAuthorization();
             app.UseResponseCaching();
