@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -76,6 +77,8 @@ namespace TurbineJobMVC
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var mimeTypeProvider = new FileExtensionContentTypeProvider();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -93,6 +96,22 @@ namespace TurbineJobMVC
                     const int durationInSeconds = 60 * 60 * 24;
                     ctx.Context.Response.Headers[HeaderNames.CacheControl] =
                         "public,max-age=" + durationInSeconds;
+
+                    var headers = ctx.Context.Response.Headers;
+                    var contentType = headers["Content-Type"];
+
+                    if (contentType != "application/x-gzip" && !ctx.File.Name.EndsWith(".gz"))
+                    {
+                        return;
+                    }
+
+                    var fileNameToTry = ctx.File.Name.Substring(0, ctx.File.Name.Length - 3);
+
+                    if (mimeTypeProvider.TryGetContentType(fileNameToTry, out var mimeType))
+                    {
+                        headers.Add("Content-Encoding", "gzip");
+                        headers["Content-Type"] = mimeType;
+                    }
                 }
             });
             app.UseSession();
