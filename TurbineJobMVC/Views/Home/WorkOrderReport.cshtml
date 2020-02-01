@@ -10,7 +10,7 @@
             {
                 <span>
                     <b>@workorderInfo.AskerCode</b>
-                </span><span> درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b> </span>برای انجام به </span>
+                </span><span> درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b> <span> مربوط به اموال </span><b>@workorderInfo.Amval</b> </span>برای انجام به </span>
                 <span>
                     <b>@workorderInfo.OprCode</b>
                 </span><span> ارجاع داده شده است</span>
@@ -50,12 +50,13 @@
                     </div>
                 }
             </div>
+            <div class="alert alert-danger rtl mx-auto">کد رهگیری یا شمار اموال شما معتبر نمی باشد</div>
             <partial name="footer" />
         }
     }
     else
     {
-        <div class="alert alert-danger rtl mx-auto">کد رهگیری شما معتبر نمی باشد</div>
+        <div class="alert alert-danger rtl mx-auto">کد رهگیری یا شماره اموال شما معتبر نمی باشد</div>
         <partial name="footer" />
     }
 </div>

@@ -64,6 +64,11 @@ namespace TurbineJobMVC.Services
             return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.WONo == Convert.ToInt64(Wono)));
         }
 
+        public async Task<WorkOrderViewModel> GetSingleWorkOrderByAR(string AR)
+        {
+            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.Amval == AR && q.WorkReportTime == null));
+        }
+
         public async Task<TahvilFormsViewModel> GetTahvilForm(string amval)
         {
             return _map.Map<TahvilFormsViewModel>(await _unitofwork.GetRepository<TahvilForms>().GetFirstOrDefaultAsync(predicate: q => q.AmvalNo.ToString() == amval));
