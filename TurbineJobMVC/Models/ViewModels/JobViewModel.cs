@@ -10,7 +10,7 @@ namespace TurbineJobMVC.Models.ViewModels
         [Required(ErrorMessage = "شماره اموال را وارد نمایید.")]
         [RegularExpression(@"\d{10}", ErrorMessage = "شماره اموال را به صورت صحیح وارد نمایید مثال 2142020025")]
         [IsExistsAR(ErrorMessage = "شماره اموال وارد شده ثبت نشده است")]
-        [IsDublicateActiveAR(ErrorMessage = "برای اموال یک درخواست ثبت شده که همچنان در دست اقدام است")]
+        [IsDublicateActiveAR()]
         public string AR { get; set; }
 
         [Display(Name = "شرح نیاز")]
