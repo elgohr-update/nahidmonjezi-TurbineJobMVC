@@ -32,5 +32,6 @@
         public decimal? diffHour { get; set; }
         public string WoTypeName { get; set; }
         public int ManDays { get; set; }
+        public int? CustomerRate { get; set; }
     }
 }

@@ -24,5 +24,6 @@
         public string AlarmDate { get; set; }
         public string AskerName { get; set; }
         public int ManDays { get; set; }
+        public int? CustomerRate { get; set; }
     }
 }
