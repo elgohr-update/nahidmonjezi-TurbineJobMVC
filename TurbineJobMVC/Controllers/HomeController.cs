@@ -130,5 +130,13 @@ namespace TurbineJobMVC.Controllers
             }
             return View(await _service.GetWorkOrderReport(WonoSearch));
         }
+        public async Task<IActionResult> GetVote(long Vote_Wono)
+        {
+            var result = await _service.SetWonoVote(Vote_Wono);
+            if (result)
+                return View();
+            else
+                return BadRequest();
+        }
     }
 }

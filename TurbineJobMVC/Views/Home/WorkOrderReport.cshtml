@@ -22,6 +22,17 @@
             }
         </div>
     </div>
+    @if (workorderInfo.CustomerRate == null)
+    {
+        <div class="row">
+            <div class="alert alert-primary mx-auto">
+                <form asp-controller="Home" asp-action="GetVote" method="get">
+                    <input type="hidden" value="@workorderInfo.WONo" name="Vote_Wono" id="Vote_Wono" />
+                    <span>خدمات ارائه شده توسط </span><b>@workorderInfo.OprCode</b><span> مورد تایید بنده بوده و مشکل اعلان شده در درخواست کار مرتفع شده است.</span><span><button class="btn btn-primary" type="submit">بله</button></span>
+                </form>
+            </div>
+        </div>
+    }
 }
 
 <div class="row ltr">

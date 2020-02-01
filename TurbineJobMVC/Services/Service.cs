@@ -88,5 +88,14 @@ namespace TurbineJobMVC.Services
             double tempInt = 0;
             return double.TryParse(number, out tempInt);
         }
+
+        public async Task<bool> SetWonoVote(long wono)
+        {
+            var workorder = await _unitofwork.GetRepository<WorkOrderTBL>().FindAsync(wono);
+            if (workorder == null) return false;
+            workorder.CustomerRate = 10;
+            await _unitofwork.SaveChangesAsync();
+            return true;
+        }
     }
 }
