@@ -128,7 +128,7 @@ namespace TurbineJobMVC.Controllers
             {
                 ViewData["WorkOrderInfo"] = workOrder;
             }
-            return View(await _service.GetWorkOrderReport(WonoSearch));
+            return View(await _service.GetWorkOrderReport(workOrder.WONo.ToString()));
         }
         public async Task<IActionResult> GetVote(long Vote_Wono)
         {

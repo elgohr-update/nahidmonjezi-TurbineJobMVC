@@ -66,7 +66,7 @@ namespace TurbineJobMVC.Services
 
         public async Task<WorkOrderViewModel> GetSingleWorkOrderByAR(string AR)
         {
-            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.Amval == AR && q.WorkReportTime == null));
+            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.Amval == AR && String.IsNullOrEmpty(q.EndJobDate)));
         }
 
         public async Task<TahvilFormsViewModel> GetTahvilForm(string amval)
