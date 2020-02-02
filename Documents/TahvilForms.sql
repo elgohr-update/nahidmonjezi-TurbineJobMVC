@@ -1,12 +1,13 @@
 ﻿USE [PCStock]
 GO
 
-/****** Object:  View [dbo].[TahvilForms]    Script Date: 1/4/2020 9:45:26 AM ******/
+/****** Object:  View [dbo].[TahvilForms]    Script Date: 2/2/2020 7:58:59 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
