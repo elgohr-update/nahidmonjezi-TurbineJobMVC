@@ -50,12 +50,22 @@
                             <p>@Model[i].ReportComment</p>
                             <h6 class="text-primary">
                                 <i class="fas fa-person-carry"></i><span> انجام دهنده:</span>
-                                @if (workorderInfo != null)
+                                @if (String.IsNullOrEmpty(Model[i].MemberName))
+                                {
+                                    @if (workorderInfo != null)
+                                    {
+                                        <span>
+                                            <mark>@workorderInfo.OprCode</mark>
+                                        </span>
+                                    }
+                                }
+                                else
                                 {
                                     <span>
-                                        <mark>@workorderInfo.OprCode</mark>
+                                        <mark>@Model[i].MemberName</mark>
                                     </span>
                                 }
+
                             </h6>
                         </div>
                     </div>

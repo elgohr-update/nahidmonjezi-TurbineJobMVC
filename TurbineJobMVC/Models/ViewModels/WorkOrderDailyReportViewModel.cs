@@ -12,6 +12,7 @@ namespace TurbineJobMVC.Models.ViewModels
         public long? Wono { get; set; }
         public DateTime? ReportDate { get; set; }
         public string ReportComment { get; set; }
+        public string MemberName { get; set; }
 
     }
 }
