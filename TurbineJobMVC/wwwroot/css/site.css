@@ -118,3 +118,7 @@ ol li {
     margin-top:5px;
     color:#850b0b !important;
 }
+
+textarea{
+    resize:none;
+}
