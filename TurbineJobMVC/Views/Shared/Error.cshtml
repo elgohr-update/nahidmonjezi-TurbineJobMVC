@@ -3,18 +3,15 @@
     ViewData["Title"] = "Error";
 }
 <div class="developer-info">
-    <div class="aert alert-danger">
-        <h1 class="text-danger">خطا.</h1>
-        <h2 class="text-danger">هنگام بررسی درخواست شما یک خطا رخ داده است.</h2>
-
+    <div class="alert alert-danger">
         @if (Model.ShowRequestId)
         {
             <p>
                 <strong>شناسه درخواست:</strong> <code>@Model.RequestId</code>
             </p>
         }
-
-        <h3>خطا در پردازش اطلاعات</h3>
+        <hr/>
+        <h2>هنگام بررسی درخواست شما یک خطا رخ داده است.</h2>
         <h4>لطفا از صحت اطلاعات خود جهت ثبت درخواست کار جدید و یا جستجو اطمینان حاصل نمایید</h4>
     </div>
 </div>
