@@ -1,7 +1,7 @@
 ﻿USE [PCStock]
 GO
 
-/****** Object:  View [dbo].[TahvilForms]    Script Date: 2/2/2020 7:58:59 AM ******/
+/****** Object:  View [dbo].[TahvilForms]    Script Date: 2/5/2020 11:12:23 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,7 +16,8 @@ GO
 
 
 
-ALTER VIEW [dbo].[TahvilForms] WITH SCHEMABINDING
+
+ALTER VIEW [dbo].[TahvilForms] 
 AS
 SELECT
   dbo.TahvilHeaderTBL.CodeTahvil,
@@ -83,13 +84,18 @@ SELECT
     WHEN SUBSTRING(CAST(dbo.TahvilDetailTBL.PartNumber AS nvarchar), 1, 3) IN ('101') THEN 'fas fa-laptop fa-lg'
     WHEN SUBSTRING(CAST(dbo.TahvilDetailTBL.PartNumber AS nvarchar), 1, 3) IN ('118') THEN 'fas fa-server fa-lg'
     ELSE ''
-  END AS Icon
+  END AS Icon,
+WorkOrder.ActiveWono
 
 FROM dbo.TahvilHeaderTBL
 INNER JOIN dbo.TahvilDetailTBL
   ON dbo.TahvilHeaderTBL.CodeTahvil = dbo.TahvilDetailTBL.CodeTahvil
 INNER JOIN dbo.PartNumberTBL
   ON dbo.TahvilDetailTBL.PartNumber = dbo.PartNumberTBL.PartNumber
+OUTER APPLY
+(
+	SELECT TOP 1 Wono AS ActiveWono FROM WorkOrderTBL WHERE dbo.WorkOrderTBL.Amval = CAST(dbo.TahvilDetailTBL.AmvalNo AS nvarchar) AND WorkReportTime IS NULL
+) AS WorkOrder
 
 GO
 

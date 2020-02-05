@@ -22,6 +22,7 @@
                         <th class="border border-white text-center" scope="col">نوع</th>
                         <th class="border border-white text-center" scope="col">شماره اموال</th>
                         <th class="border border-white text-center" scope="col">تاریخ تحویل</th>
+                        <th class="border border-white text-center" scope="col">درخواست فعال</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,7 @@
                             <td>@form.PartName</td>
                             <td>@form.AmvalNo</td>
                             <td>@form.DateTahvil</td>
+                            <td><a asp-controller="Home" asp-action="WorkOrderReport" asp-route-WonoSearch="@form.ActiveWono" class="btn btn-link">@form.ActiveWono</a></td>
                         </tr>
                     }
                 </tbody>

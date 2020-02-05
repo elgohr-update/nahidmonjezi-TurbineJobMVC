@@ -72,7 +72,7 @@ namespace TurbineJobMVC
 
             services.AddScoped<IService, Service>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

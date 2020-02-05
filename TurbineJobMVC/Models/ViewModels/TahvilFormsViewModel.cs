@@ -24,5 +24,6 @@ namespace TurbineJobMVC.Models.ViewModels
         public string PartModelName { get; set; }
         public int DevilerCodeOrigin { get; set; }
         public string Icon { get; set; }
+        public long? ActiveWono { get; set; }
     }
 }

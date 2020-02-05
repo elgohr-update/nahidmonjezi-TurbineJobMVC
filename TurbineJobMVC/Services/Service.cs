@@ -23,7 +23,6 @@ namespace TurbineJobMVC.Services
         public async Task<long> addWorkOrder(JobViewModel JobModel)
         {
             var repo = _unitofwork.GetRepository<WorkOrderTBL>();
-            var repoWorkOrderComment = _unitofwork.GetRepository<WorkOrderDailyReportTBL>();
             var newWorkOrder = _map.Map<WorkOrderTBL>(JobModel);
             newWorkOrder.WOTime = DateTime.Now.ToString("HH:MM");
             newWorkOrder.WODate = DateExtensions.ConvertToWesternArbicNumerals(new PersianDateTime(DateTime.Now).ToShortDateString());
@@ -40,17 +39,9 @@ namespace TurbineJobMVC.Services
             if (ARInfo != null)
             {
                 newWorkOrder.AskerCode = ARInfo.DevilerCodeOrigin;
-                var workOrderReport = new WorkOrderDailyReportTBL()
-                {
-                    Wono = newWorkOrder.WONo,
-                    ReportID = Guid.NewGuid(),
-                    ReportDate = DateTime.Now,
-                    ReportComment = "درخواست کاربر دریافت گردید"
-                };
                 await repo.InsertAsync(newWorkOrder);
                 await _unitofwork.SaveChangesAsync();
-                await repoWorkOrderComment.InsertAsync(workOrderReport);
-                await _unitofwork.SaveChangesAsync();
+                await AddDailyReport(newWorkOrder.WONo, "درخواست کاربر دریافت گردید");
             }
             else
             {
@@ -92,19 +83,27 @@ namespace TurbineJobMVC.Services
         public async Task<bool> SetWonoVote(long wono)
         {
             var workorder = await _unitofwork.GetRepository<WorkOrderTBL>().FindAsync(wono);
-            var repoWorkOrderComment = _unitofwork.GetRepository<WorkOrderDailyReportTBL>();
             if (workorder == null) return false;
             workorder.CustomerRate = 10;
+            await AddDailyReport(wono, "تاییدیه انجام کار توسط کاربر ثبت گردید");
+            await _unitofwork.SaveChangesAsync();
+            return true;
+        }
+
+        private async Task<WorkOrderDailyReportViewModel> AddDailyReport(long wono, string ReportComment)
+        {
+            var repoWorkOrderComment = _unitofwork.GetRepository<WorkOrderDailyReportTBL>();
             var workOrderReport = new WorkOrderDailyReportTBL()
             {
                 Wono = wono,
                 ReportID = Guid.NewGuid(),
                 ReportDate = DateTime.Now,
-                ReportComment = "تاییدیه انجام کار توسط کاربر ثبت گردید"
+                ReportComment = ReportComment,
+                MemberName = "سامانه مدیریت درخواست"
             };
             await repoWorkOrderComment.InsertAsync(workOrderReport);
             await _unitofwork.SaveChangesAsync();
-            return true;
+            return _map.Map<WorkOrderDailyReportViewModel>(workOrderReport);
         }
     }
 }
