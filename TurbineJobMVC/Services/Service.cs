@@ -92,8 +92,17 @@ namespace TurbineJobMVC.Services
         public async Task<bool> SetWonoVote(long wono)
         {
             var workorder = await _unitofwork.GetRepository<WorkOrderTBL>().FindAsync(wono);
+            var repoWorkOrderComment = _unitofwork.GetRepository<WorkOrderDailyReportTBL>();
             if (workorder == null) return false;
             workorder.CustomerRate = 10;
+            var workOrderReport = new WorkOrderDailyReportTBL()
+            {
+                Wono = wono,
+                ReportID = Guid.NewGuid(),
+                ReportDate = DateTime.Now,
+                ReportComment = "تاییدیه انجام کار توسط کاربر ثبت گردید"
+            };
+            await repoWorkOrderComment.InsertAsync(workOrderReport);
             await _unitofwork.SaveChangesAsync();
             return true;
         }
