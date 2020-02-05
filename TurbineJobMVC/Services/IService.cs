@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TurbineJobMVC.Models.Entites;
 using TurbineJobMVC.Models.ViewModels;
 
 namespace TurbineJobMVC.Services
@@ -14,5 +15,7 @@ namespace TurbineJobMVC.Services
         Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono);
         Task<bool> SetWonoVote(long wono);
         bool IsNumberic(string number);
+        Task<WorkOrderTBL> IsDublicateActiveAR(string amval);
+        Task<WorkOrderTBL> IsDublicateNotRateAR(string amval);
     }
 }

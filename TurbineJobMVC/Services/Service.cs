@@ -74,6 +74,14 @@ namespace TurbineJobMVC.Services
             return _map.Map<IList<WorkOrderDailyReportViewModel>>(await _unitofwork.GetRepository<WorkOrderDailyReportTBL>().GetAllAsync(predicate: q => q.Wono == Convert.ToInt64(Wono), orderBy: q => q.OrderByDescending(c => c.ReportDate)));
         }
 
+        public async Task<WorkOrderTBL> IsDublicateActiveAR(string amval)
+        {
+            return await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate));
+        }
+        public async Task<WorkOrderTBL> IsDublicateNotRateAR(string amval)
+        {
+            return await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
+        }
         public bool IsNumberic(string number)
         {
             double tempInt = 0;
