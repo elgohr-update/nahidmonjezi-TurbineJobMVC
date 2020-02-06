@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-md-6 col-sm-12 mt-2">
                 <div class="card shadow p-1 mb-5 rounded helpinfo cardop">
-                    <div class="card-body  " >
-                        <form asp-controller="Home" asp-action="index" asp-antiforgery="true" method="post">
+                    <div class="card-body  ">
+                        <form asp-controller="Home" asp-action="index" asp-antiforgery="true" method="post" id="frmAddWorkOrder" name="frmAddWorkOrder">
                             <div class="form-group ">
                                 <div class="input-group mb-3  ">
                                     <div class="input-group-prepend ">
@@ -63,7 +63,7 @@
                     <div class="card-body">
                         <div class="row">
                             <ol class="font-weight-bold alert alert-info" itemscope>
-                                <li  class="mx-auto"><h6 class="alert alert-warning"><i class="fas fa-pen-nib"></i> این سـامــانه جهت ثبت درخـــواستهـــای نرم افزاری، سخت افزاری و لوازم مصرفی طراحی شده است جهت ثبت درخواست به نکارت ذیل توجه فرمایید:</h6></li>
+                                <li class="mx-auto"><h6 class="alert alert-warning"><i class="fas fa-pen-nib"></i> این سـامــانه جهت ثبت درخـــواستهـــای نرم افزاری، سخت افزاری و لوازم مصرفی طراحی شده است جهت ثبت درخواست به نکارت ذیل توجه فرمایید:</h6></li>
                                 <li>شماره امــوال می بایــست بـــــصورت صحیح وارد شود، مثال : 2142020025.</li>
                                 <li>شرح نیاز می بایست بصورت مختصر و مفید درج گردد.</li>
                                 <li>تلفن تماس می بایست مربوط به کاربر درخواست کننده باشد.</li>

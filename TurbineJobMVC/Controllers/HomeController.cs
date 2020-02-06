@@ -20,7 +20,6 @@ namespace TurbineJobMVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork _unitofwork;
         private readonly IMapper _map;
         private readonly IDetection _detection;
         private readonly IService _service;
@@ -29,14 +28,12 @@ namespace TurbineJobMVC.Controllers
         private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge", "Safari" };
         public HomeController(
             ILogger<HomeController> logger,
-            IUnitOfWork unitofwork,
             IMapper map,
             IDetection detection,
             IService service,
             IDataProtectionProvider provider)
         {
             _logger = logger;
-            _unitofwork = unitofwork;
             _map = map;
             _detection = detection;
             _service = service;

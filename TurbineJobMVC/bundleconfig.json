@@ -13,12 +13,13 @@
       "wwwroot/lib/shabnam-font/dist/font-face.css",
       "wwwroot/lib/fontawesome-pro-5.12.0-web/css/solid.min.css",
       "wwwroot/css/site.css",
-      "wwwroot/css/TimeLine.min.css"
+      "wwwroot/css/TimeLine.min.css",
+      "wwwroot/lib/toastr/build/toastr.min.css"
     ]
   },
   {
     "outputFileName": "wwwroot/js/site.min.js",
-    "inputFiles": [      
+    "inputFiles": [
       "wwwroot/js/site.js"
     ]
   },
