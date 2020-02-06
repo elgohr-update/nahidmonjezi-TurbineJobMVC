@@ -1,12 +1,25 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Models.CustomValidation
 {
-    public class IsDublicateActiveAR : ValidationAttribute
+    public class IsDublicateActiveAR : ValidationAttribute, IClientModelValidator
     {
+        public void AddValidation(ClientModelValidationContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            MergeAttribute(context.Attributes, "data-val", "true");
+            MergeAttribute(context.Attributes, "data-val-isdublicateactivear", "برای این اموال یک درخواست ثبت شده که همچنان در دست اقدام می باشد");
+        }
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null) return new ValidationResult(ErrorMessage!=null ? ErrorMessage : "شماره اموال وجود ندارد");
@@ -22,5 +35,15 @@ namespace TurbineJobMVC.Models.CustomValidation
             }
         }
 
+        private bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
+        {
+            if (attributes.ContainsKey(key))
+            {
+                return false;
+            }
+
+            attributes.Add(key, value);
+            return true;
+        }
     }
 }

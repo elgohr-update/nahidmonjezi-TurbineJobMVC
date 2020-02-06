@@ -19,7 +19,6 @@
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $('#frmAddWorkOrder').bind('invalid-form.validate', function (form, validator) {
-        console.log(validator.errorList);
         showErrorMessagesOnValidate(validator.errorList);
     });    
 });
