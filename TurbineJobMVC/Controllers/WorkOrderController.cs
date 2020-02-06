@@ -42,5 +42,15 @@ namespace TurbineJobMVC.Controllers
             else
                 return Ok("false");
         }
+
+        [HttpGet("IsDublicateNotRateAR/{amval}")]
+        public async Task<ActionResult<string>> IsDublicateNotRateAR(string amval)
+        {
+            var workorder = await _service.IsDublicateNotRateAR(amval);
+            if (workorder != null)
+                return Ok(workorder);
+            else
+                return Ok("false");
+        }
     }
 }
