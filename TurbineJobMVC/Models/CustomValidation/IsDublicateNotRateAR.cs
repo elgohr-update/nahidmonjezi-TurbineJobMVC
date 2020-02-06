@@ -5,7 +5,7 @@ using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Models.CustomValidation
 {
-    public class IsDublicateNotRateAR : ValidationAttribute
+    public sealed class IsDublicateNotRateAR : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

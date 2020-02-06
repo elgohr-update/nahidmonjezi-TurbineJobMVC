@@ -88,4 +88,15 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+            $.validator.addMethod("isdublicateactivear",
+                function (value, element, parameters) {
+                    return true;
+                });
+    
+            $.validator.unobtrusive.adapters.add("isdublicateactivear", [], function (options) {
+                options.rules.isdublicateactivear = {};
+                options.messages["isdublicateactivear"] = options.message;
+            });
+    </script>
 }

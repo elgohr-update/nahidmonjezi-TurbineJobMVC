@@ -7,7 +7,8 @@ using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Models.CustomValidation
 {
-    public class IsDublicateActiveAR : ValidationAttribute, IClientModelValidator
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    public sealed class IsDublicateActiveAR : ValidationAttribute, IClientModelValidator
     {
         public void AddValidation(ClientModelValidationContext context)
         {
