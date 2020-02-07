@@ -3,7 +3,6 @@ using Audit.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using TurbineJobMVC.Models.Entites;
 using TurbineJobMVC.Models.EntitiesConfigure;
 
@@ -16,7 +15,7 @@ namespace TurbineJobMVC.Models
         public DbSet<WorkOrderTBL> WorkOrderTBL { get; set; }
         public DbSet<WorkOrder> WorkOrder { get; set; }
         public DbSet<TahvilForms> TahvilForms { get; set; }
-        public DbSet<WorkOrderDailyReportTBL> WorkOrderDailyReportTBL{ get; set; }
+        public DbSet<WorkOrderDailyReportTBL> WorkOrderDailyReportTBL { get; set; }
 
         public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base()
         {

@@ -1,5 +1,4 @@
-﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using AutoMapper;
+﻿using AutoMapper;
 using DNTCaptcha.Core;
 using DNTCaptcha.Core.Providers;
 using Microsoft.AspNetCore.Authorization;
@@ -117,7 +116,7 @@ namespace TurbineJobMVC.Controllers
             if (!_service.IsNumberic(WonoSearch)) return BadRequest();
             if (WonoSearch.Length == 8)
                 workOrder = await _service.GetSingleWorkOrder(WonoSearch);
-            else if(WonoSearch.Length>8)
+            else if (WonoSearch.Length > 8)
             {
                 workOrder = await _service.GetSingleWorkOrderByAR(WonoSearch);
             }

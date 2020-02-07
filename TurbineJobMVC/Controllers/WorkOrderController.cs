@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Controllers

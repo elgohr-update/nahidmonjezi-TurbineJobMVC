@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Models.CustomValidation
@@ -23,10 +22,10 @@ namespace TurbineJobMVC.Models.CustomValidation
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value == null) return new ValidationResult(ErrorMessage!=null ? ErrorMessage : "شماره اموال وجود ندارد");
+            if (value == null) return new ValidationResult(ErrorMessage != null ? ErrorMessage : "شماره اموال وجود ندارد");
             var _service = (Service)validationContext.GetService(typeof(IService));
             var workorder = _service.IsDublicateActiveAR(value.ToString()).Result;
-            if (workorder==null)
+            if (workorder == null)
             {
                 return ValidationResult.Success;
             }

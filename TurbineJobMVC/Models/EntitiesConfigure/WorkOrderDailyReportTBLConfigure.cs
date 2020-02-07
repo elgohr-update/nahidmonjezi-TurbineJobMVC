@@ -1,11 +1,11 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using TurbineJobMVC.Models.Entites;
 
 namespace TurbineJobMVC.Models.EntitiesConfigure
 {
-    public class WorkOrderDailyReportTBLConfigure:IEntityTypeConfiguration<WorkOrderDailyReportTBL>
+    public class WorkOrderDailyReportTBLConfigure : IEntityTypeConfiguration<WorkOrderDailyReportTBL>
     {
         public void Configure(EntityTypeBuilder<WorkOrderDailyReportTBL> builder)
         {
