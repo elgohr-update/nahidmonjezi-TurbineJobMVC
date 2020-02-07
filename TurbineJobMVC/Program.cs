@@ -16,7 +16,7 @@ namespace TurbineJobMVC
             .ConfigureAppConfiguration((hostContext, configApp) =>
             {
                 configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
-                configApp.AddEnvironmentVariables(prefix: "PREFIX_");
+                configApp.AddEnvironmentVariables(prefix: "ASPNETCORE_");
                 configApp.AddCommandLine(args);
             })
             .ConfigureWebHostDefaults(webBuilder =>
