@@ -36,17 +36,10 @@ namespace TurbineJobMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var Wono = await _service.WorkOrderService.addWorkOrder(JobModel);
-                    if (Wono == -1) throw new Exception();
-                    else
-                        return RedirectToAction("Tracking", new { id = Wono.ToString() });
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex);
-                }
+                var Wono = await _service.WorkOrderService.addWorkOrder(JobModel);
+                if (Wono == -1) throw new Exception();
+                else
+                    return RedirectToAction("Tracking", new { id = Wono.ToString() });
             }
             else
             {
@@ -64,7 +57,7 @@ namespace TurbineJobMVC.Controllers
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
@@ -79,7 +72,6 @@ namespace TurbineJobMVC.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
@@ -89,23 +81,18 @@ namespace TurbineJobMVC.Controllers
         {
             WorkOrderViewModel workOrder = null;
             if (!_service.WorkOrderService.IsNumberic(WonoSearch)) return BadRequest();
-            if (WonoSearch.Length == 8)
-                workOrder = await _service.WorkOrderService.GetSingleWorkOrder(WonoSearch);
-            else if (WonoSearch.Length > 8)
-            {
-                workOrder = await _service.WorkOrderService.GetSingleWorkOrderByAR(WonoSearch);
-            }
+            workOrder = await _service.WorkOrderService.ChooseSingleWorkOrderByAROrWono(WonoSearch);
             if (workOrder != null)
             {
                 ViewData["WorkOrderInfo"] = workOrder;
+                return View(await _service.WorkOrderService.GetWorkOrderReport(workOrder.WONo.ToString()));
             }
             else return BadRequest();
-            return View(await _service.WorkOrderService.GetWorkOrderReport(workOrder.WONo.ToString()));
+            
         }
         public async Task<IActionResult> GetVote(long Vote_Wono)
         {
-            var result = await _service.WorkOrderService.SetWonoVote(Vote_Wono);
-            if (result)
+            if (await _service.WorkOrderService.SetWonoVote(Vote_Wono))
                 return View();
             else
                 return BadRequest();

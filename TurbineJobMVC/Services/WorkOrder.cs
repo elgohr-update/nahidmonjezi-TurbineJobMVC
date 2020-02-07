@@ -50,6 +50,20 @@ namespace TurbineJobMVC.Services
             return newWorkOrder.WONo;
         }
 
+        public async Task<WorkOrderViewModel> ChooseSingleWorkOrderByAROrWono(string code)
+        {
+            if (code.Length == 8)
+                return  await GetSingleWorkOrder(code);
+            else if (code.Length > 8)
+            {
+                return await GetSingleWorkOrderByAR(code);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task<WorkOrderViewModel> GetSingleWorkOrder(string Wono)
         {
             return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<Models.Entites.WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.WONo == Convert.ToInt64(Wono)));
