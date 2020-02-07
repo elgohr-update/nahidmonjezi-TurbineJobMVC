@@ -16,35 +16,15 @@ using Wangkanai.Detection;
 
 namespace TurbineJobMVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IMapper _map;
-        private readonly IDetection _detection;
-        private readonly IService _service;
-        private readonly IDataProtectionProvider _provider;
-
-        private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge", "Safari" };
-        public HomeController(
-            ILogger<HomeController> logger,
+        public HomeController(ILogger<HomeController> logger,
             IMapper map,
-            IDetection detection,
             IService service,
-            IDataProtectionProvider provider)
-        {
-            _logger = logger;
-            _map = map;
-            _detection = detection;
-            _service = service;
-            _provider = provider;
-        }
-
+            IDataProtectionProvider provider) : base(logger, map, service, provider) { }
         public IActionResult Index()
         {
-            if (CompatibleBrowsers.Contains(_detection.Browser.Type.ToString()))
-                return View();
-            else
-                return RedirectToAction("InCompatibleBrowser", "Home");
+            return View();
         }
 
         [HttpPost, AutoValidateAntiforgeryToken]
@@ -58,7 +38,7 @@ namespace TurbineJobMVC.Controllers
             {
                 try
                 {
-                    var Wono = await _service.addWorkOrder(JobModel);
+                    var Wono = await _service.WorkOrderService.addWorkOrder(JobModel);
                     if (Wono == -1) throw new Exception();
                     else
                         return RedirectToAction("Tracking", new { id = Wono.ToString() });
@@ -76,10 +56,10 @@ namespace TurbineJobMVC.Controllers
 
         public async Task<IActionResult> Tracking(string id)
         {
-            var workOrder = await _service.GetSingleWorkOrder(id);
+            var workOrder = await _service.WorkOrderService.GetSingleWorkOrder(id);
             if (workOrder != null)
             {
-                ViewData["TahvilInfo"] = await _service.GetTahvilForm(workOrder.Amval);
+                ViewData["TahvilInfo"] = await _service.WorkOrderService.GetTahvilForm(workOrder.Amval);
                 return View(workOrder);
             }
             else
@@ -91,7 +71,7 @@ namespace TurbineJobMVC.Controllers
         [ResponseCache(Duration = 100, VaryByQueryKeys = new[] { "*" })]
         public async Task<IActionResult> Search(string id)
         {
-            return View(await _service.GetTahvilForms(id));
+            return View(await _service.WorkOrderService.GetTahvilForms(id));
         }
 
         public IActionResult Privacy()
@@ -105,31 +85,26 @@ namespace TurbineJobMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult InCompatibleBrowser()
-        {
-            return View();
-        }
-
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {
             WorkOrderViewModel workOrder = null;
-            if (!_service.IsNumberic(WonoSearch)) return BadRequest();
+            if (!_service.WorkOrderService.IsNumberic(WonoSearch)) return BadRequest();
             if (WonoSearch.Length == 8)
-                workOrder = await _service.GetSingleWorkOrder(WonoSearch);
+                workOrder = await _service.WorkOrderService.GetSingleWorkOrder(WonoSearch);
             else if (WonoSearch.Length > 8)
             {
-                workOrder = await _service.GetSingleWorkOrderByAR(WonoSearch);
+                workOrder = await _service.WorkOrderService.GetSingleWorkOrderByAR(WonoSearch);
             }
             if (workOrder != null)
             {
                 ViewData["WorkOrderInfo"] = workOrder;
             }
             else return BadRequest();
-            return View(await _service.GetWorkOrderReport(workOrder.WONo.ToString()));
+            return View(await _service.WorkOrderService.GetWorkOrderReport(workOrder.WONo.ToString()));
         }
         public async Task<IActionResult> GetVote(long Vote_Wono)
         {
-            var result = await _service.SetWonoVote(Vote_Wono);
+            var result = await _service.WorkOrderService.SetWonoVote(Vote_Wono);
             if (result)
                 return View();
             else

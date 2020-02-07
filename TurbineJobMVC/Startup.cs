@@ -18,16 +18,21 @@ using Raven.StructuredLog;
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using TurbineJobMVC.CustomMiddleware;
 using TurbineJobMVC.Models;
 using TurbineJobMVC.Services;
+using Wangkanai.Detection;
 
 namespace TurbineJobMVC
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostEnvironment host)
+        public Startup(
+            IConfiguration configuration, 
+            IHostEnvironment host)
         {
             Configuration = configuration;
             hostEnvironment = host;
@@ -71,6 +76,7 @@ namespace TurbineJobMVC
                 services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
 
             services.AddScoped<IService, Service>();
+            services.AddScoped<IWorkOrderService, WorkOrder>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -117,10 +123,12 @@ namespace TurbineJobMVC
                 }
             });
             app.UseSession();
-            app.UseRouting();
-            app.UseAuthorization();
             app.UseResponseCaching();
             app.UseStatusCodePagesWithRedirects("/Home/Error");
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseMiddleware<CheckBrowserMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

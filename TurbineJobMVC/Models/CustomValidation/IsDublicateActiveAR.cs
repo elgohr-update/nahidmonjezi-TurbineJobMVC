@@ -23,7 +23,7 @@ namespace TurbineJobMVC.Models.CustomValidation
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null) return new ValidationResult(ErrorMessage != null ? ErrorMessage : "شماره اموال وجود ندارد");
-            var _service = (Service)validationContext.GetService(typeof(IService));
+            var _service = (WorkOrder)validationContext.GetService(typeof(IWorkOrderService));
             var workorder = _service.IsDublicateActiveAR(value.ToString()).Result;
             if (workorder == null)
             {
