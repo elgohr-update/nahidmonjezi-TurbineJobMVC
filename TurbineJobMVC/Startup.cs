@@ -42,6 +42,7 @@ namespace TurbineJobMVC
 
         public IConfiguration Configuration { get; }
         private IHostEnvironment hostEnvironment { get; }
+        private IHttpContextAccessor _httpContextAccessor { get; }
         private X509Certificate2 logServerCertificate;
 
         public void ConfigureServices(IServiceCollection services)
@@ -148,8 +149,9 @@ namespace TurbineJobMVC
                         .AddUserAgent("*")
                         .AddCrawlDelay(TimeSpan.FromSeconds(10))
                         .Disallow("/")
-                )
-            .AddSitemap("https://example.com/sitemap.xml"));
+                ));
+            //.AddSitemap($"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/sitemap.xml"));
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
