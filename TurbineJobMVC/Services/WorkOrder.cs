@@ -25,17 +25,17 @@ namespace TurbineJobMVC.Services
             var repo = _unitofwork.GetRepository<WorkOrderTBL>();
             var newWorkOrder = _map.Map<WorkOrderTBL>(JobModel);
             newWorkOrder.WOTime = DateTime.Now.ToString("HH:MM");
-            newWorkOrder.WODate = DateExtensions.ConvertToWesternArbicNumerals(new PersianDateTime(DateTime.Now).ToShortDateString());
+            newWorkOrder.WODate = new PersianDateTime(DateTime.Now).ToShortDateString();
             newWorkOrder.RequestDate = newWorkOrder.WODate;
-            var recordsExists = repo.Exists(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4));
+            var recordsExists = await repo.ExistsAsync(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4));
             if (recordsExists)
-                newWorkOrder.WONo = repo.GetAll(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4)).Max(q => q.WONo) + 1;
+                newWorkOrder.WONo = Convert.ToInt64(await repo.MaxAsync(predicate: q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4), q => q.WONo) + 1);
             else
-                newWorkOrder.WONo = Convert.ToInt64((newWorkOrder.WODate.Substring(0, 4) + "000001"));
+                newWorkOrder.WONo = Convert.ToInt64($"{(newWorkOrder.WODate.Substring(0, 4))}000001");
             newWorkOrder.ConsComment = 45;
             newWorkOrder.OprCode = null;
             newWorkOrder.WoType = 1;
-            var ARInfo = _map.Map<TahvilFormsViewModel>(_unitofwork.GetRepository<TahvilForms>().GetFirstOrDefault(predicate: q => q.AmvalNo.ToString() == JobModel.AR));
+            var ARInfo = _map.Map<TahvilFormsViewModel>(await _unitofwork.GetRepository<TahvilForms>().GetFirstOrDefaultAsync(predicate: q => q.AmvalNo.ToString() == JobModel.AR));
             if (ARInfo != null)
             {
                 newWorkOrder.AskerCode = ARInfo.DevilerCodeOrigin;
@@ -53,7 +53,7 @@ namespace TurbineJobMVC.Services
         public async Task<WorkOrderViewModel> ChooseSingleWorkOrderByAROrWono(string code)
         {
             if (code.Length == 8)
-                return  await GetSingleWorkOrder(code);
+                return await GetSingleWorkOrder(code);
             else if (code.Length > 8)
             {
                 return await GetSingleWorkOrderByAR(code);

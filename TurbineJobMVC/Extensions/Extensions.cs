@@ -2,7 +2,7 @@
 
 namespace TurbineJobMVC.Extensions
 {
-    public static class DateExtensions
+    public static class Extensions
     {
         public static string ConvertToWesternArbicNumerals(string input)
         {
