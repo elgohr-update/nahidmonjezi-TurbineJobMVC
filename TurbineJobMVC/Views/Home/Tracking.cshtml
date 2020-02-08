@@ -16,7 +16,7 @@
                 <h5 class="ml-3"><i>نوع اموال:</i><span>&ensp;<b>@tahvil.PartName,@tahvil.PartModelName</b></span></h5>
                 <br />
                 <h5 class="ml-3"><i>شرح درخواست:</i></h5>
-                <h6 class="ml-3 alert alert-primary">@Model.NeedDescription</h6>
+                <h6 class="ml-3 alert alert-primary">@Html.Raw(@Model.NeedDescription.Replace("\n", "<br/>"))</h6>
                 <br />
             </div>
         </div>
