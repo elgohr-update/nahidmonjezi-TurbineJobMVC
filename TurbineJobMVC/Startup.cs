@@ -75,9 +75,10 @@ namespace TurbineJobMVC
             });
             if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
                 services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
-
+            
+            services.AddScoped<IWorkOrderService, WorkOrderService>();
+            services.AddScoped<IDateTimeService, DateTimeService>();
             services.AddScoped<IService, Service>();
-            services.AddScoped<IWorkOrderService, WorkOrder>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

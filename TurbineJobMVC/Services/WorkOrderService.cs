@@ -11,21 +11,23 @@ using TurbineJobMVC.Models.ViewModels;
 
 namespace TurbineJobMVC.Services
 {
-    public class WorkOrder : IWorkOrderService
+    public class WorkOrderService : IWorkOrderService
     {
         private readonly IUnitOfWork _unitofwork;
         private readonly IMapper _map;
-        public WorkOrder(IUnitOfWork unitofwork, IMapper map)
+        private readonly IDateTimeService _dateTimeService;
+        public WorkOrderService(IUnitOfWork unitofwork, IMapper map, IDateTimeService dateTimeService)
         {
             _unitofwork = unitofwork;
             _map = map;
+            _dateTimeService = dateTimeService;
         }
         public async Task<long> addWorkOrder(JobViewModel JobModel)
         {
             var repo = _unitofwork.GetRepository<WorkOrderTBL>();
             var newWorkOrder = _map.Map<WorkOrderTBL>(JobModel);
             newWorkOrder.WOTime = DateTime.Now.ToString("HH:MM");
-            newWorkOrder.WODate = new PersianDateTime(DateTime.Now).ToShortDateString();
+            newWorkOrder.WODate = _dateTimeService.ConvertToShortJalaliDateString(DateTime.Now);
             newWorkOrder.RequestDate = newWorkOrder.WODate;
             var recordsExists = await repo.ExistsAsync(q => q.WODate.Substring(0, 4) == newWorkOrder.WODate.Substring(0, 4));
             if (recordsExists)

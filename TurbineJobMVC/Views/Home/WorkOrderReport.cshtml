@@ -1,4 +1,5 @@
 ﻿@model IList<WorkOrderDailyReportViewModel>
+@inject IService _service;
 @{
     WorkOrderViewModel workorderInfo = ViewData["WorkOrderInfo"] as WorkOrderViewModel;
 }
@@ -46,7 +47,7 @@
                 {
                     <div class="containerTL @(i % 2 == 0 ? "rightTL" : "leftTL")">
                         <div class="contentTL rtl">
-                            <h6 class="text-secondary"><i class="fas fa-calendar-check"></i><span> @(new PersianDateTime(Model[i].ReportDate).ToLongDateTimeString())</span></h6>
+                            <h6 class="text-secondary"><i class="fas fa-calendar-check"></i><span> @(_service.DateTimeService.ConvertToLongJalaliDateTimeString(Model[i].ReportDate))</span></h6>
                             <p>@Model[i].ReportComment</p>
                             <h6 class="text-primary">
                                 <i class="fas fa-person-carry"></i><span> انجام دهنده:</span>
