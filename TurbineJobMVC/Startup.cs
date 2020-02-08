@@ -77,11 +77,11 @@ namespace TurbineJobMVC
             });
             if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
                 services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
-            
+
             services.AddScoped<IWorkOrderService, WorkOrderService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
             services.AddScoped<IService, Service>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
@@ -134,6 +134,22 @@ namespace TurbineJobMVC
             app.UseAuthorization();
             app.UseCheckBrowserMiddleware();
             app.UseSitemapMiddleware();
+            app.UseRobotsTxt(builder =>
+            builder
+                .AddSection(section =>
+                    section
+                        .AddComment("Allow Googlebot")
+                        .AddUserAgent("Googlebot")
+                        .Allow("/")
+                    )
+                .AddSection(section =>
+                    section
+                        .AddComment("Disallow the rest")
+                        .AddUserAgent("*")
+                        .AddCrawlDelay(TimeSpan.FromSeconds(10))
+                        .Disallow("/")
+                )
+            .AddSitemap("https://example.com/sitemap.xml"));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

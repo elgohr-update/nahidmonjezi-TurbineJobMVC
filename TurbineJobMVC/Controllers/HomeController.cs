@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TurbineJobMVC.Models;
 using TurbineJobMVC.Models.ViewModels;
