@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TurbineJobMVC.Extensions;
-using TurbineJobMVC.Models.Entites;
+using TurbineJobMVC.Models.Entities;
 using TurbineJobMVC.Models.ViewModels;
 
 namespace TurbineJobMVC.Services
@@ -68,12 +68,12 @@ namespace TurbineJobMVC.Services
 
         public async Task<WorkOrderViewModel> GetSingleWorkOrder(string Wono)
         {
-            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<Models.Entites.WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.WONo == Convert.ToInt64(Wono)));
+            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.WONo == Convert.ToInt64(Wono)));
         }
 
         public async Task<WorkOrderViewModel> GetSingleWorkOrderByAR(string AR)
         {
-            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<Models.Entites.WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.Amval == AR && string.IsNullOrEmpty(q.EndJobDate)));
+            return _map.Map<WorkOrderViewModel>(await _unitofwork.GetRepository<WorkOrder>().GetFirstOrDefaultAsync(predicate: q => q.Amval == AR && string.IsNullOrEmpty(q.EndJobDate)));
         }
 
         public async Task<TahvilFormsViewModel> GetTahvilForm(string amval)

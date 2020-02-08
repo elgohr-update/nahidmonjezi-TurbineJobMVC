@@ -3,7 +3,7 @@ using Audit.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using TurbineJobMVC.Models.Entites;
+using TurbineJobMVC.Models.Entities;
 using TurbineJobMVC.Models.EntitiesConfigure;
 
 namespace TurbineJobMVC.Models

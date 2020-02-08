@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using TurbineJobMVC.Models.Entites;
+using TurbineJobMVC.Models.Entities;
 
 namespace TurbineJobMVC.Models.EntitiesConfigure
 {

@@ -1,4 +1,4 @@
-﻿namespace TurbineJobMVC.Models.Entites
+﻿namespace TurbineJobMVC.Models.Entities
 {
     public class WorkOrderTBL
     {

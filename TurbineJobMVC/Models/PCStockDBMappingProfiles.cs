@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TurbineJobMVC.Models.Entites;
+using TurbineJobMVC.Models.Entities;
 using TurbineJobMVC.Models.ViewModels;
 
 namespace TurbineJobMVC.Models

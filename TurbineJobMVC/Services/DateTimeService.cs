@@ -8,18 +8,23 @@ namespace TurbineJobMVC.Services
 {
     public class DateTimeService:IDateTimeService
     {
+        public DateTimeService()
+        {
+
+        }
         public string ConvertToLongJalaliDateTimeString(DateTime? nullableDateTime)
         {
-            return new PersianDateTime(nullableDateTime).ToLongDateTimeString();
+            return ConvertToPersianDateTime(nullableDateTime).ToLongDateTimeString();
         }
         public string ConvertToShortJalaliDateString(DateTime? nullableDateTime)
         {
-            return new PersianDateTime(nullableDateTime).ToShortDateString();
+            return ConvertToPersianDateTime(nullableDateTime).ToShortDateString();
         }
 
         public PersianDateTime ConvertToPersianDateTime(DateTime? nullableDateTime)
         {
             return new PersianDateTime(nullableDateTime);
         }
+
     }
 }
