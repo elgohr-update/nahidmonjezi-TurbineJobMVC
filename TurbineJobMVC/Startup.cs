@@ -31,7 +31,7 @@ namespace TurbineJobMVC
     public class Startup
     {
         public Startup(
-            IConfiguration configuration, 
+            IConfiguration configuration,
             IHostEnvironment host)
         {
             Configuration = configuration;
@@ -40,6 +40,7 @@ namespace TurbineJobMVC
 
         public IConfiguration Configuration { get; }
         private IHostEnvironment hostEnvironment { get; }
+        private X509Certificate2 logServerCertificate;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -140,11 +141,15 @@ namespace TurbineJobMVC
         private IDocumentStore CreateRavenDocStore()
         {
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
+            if (hostEnvironment.IsDevelopment())
+                logServerCertificate = new X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/free.aiki.client.certificate.with.password.pfx", "D7511C44414CAA552B425F39DAE8CA6");
+            else
+                logServerCertificate = new X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/TurbineJobLogs.pfx", "Mveyma6303$");
             var docStore = new DocumentStore
             {
                 Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
                 Database = Configuration.GetSection("RavenDBSettings:CollectionName").Value,
-                Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/free.aiki.client.certificate.with.password.pfx", "D7511C44414CAA552B425F39DAE8CA6")
+                Certificate = logServerCertificate
             };
             docStore.Initialize();
             return docStore;
