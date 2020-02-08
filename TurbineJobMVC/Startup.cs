@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using TurbineJobMVC.BuilderExtensions;
 using TurbineJobMVC.CustomMiddleware;
 using TurbineJobMVC.Models;
 using TurbineJobMVC.Services;
@@ -130,7 +132,8 @@ namespace TurbineJobMVC
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<CheckBrowserMiddleware>();
+            app.UseCheckBrowserMiddleware();
+            app.UseSitemapMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

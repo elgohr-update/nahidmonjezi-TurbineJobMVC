@@ -9,22 +9,22 @@ namespace TurbineJobMVC.CustomMiddleware
 {
     public class CheckBrowserMiddleware
     {
-        private RequestDelegate next;
+        private RequestDelegate _next;
         private readonly string[] CompatibleBrowsers = { "Chrome", "Firefox", "Edge", "Safari" };
         public CheckBrowserMiddleware(RequestDelegate next)
         {
-            this.next = next;
+            this._next = next;
         }
-        public async Task InvokeAsync(HttpContext httpContext,
+        public async Task InvokeAsync(HttpContext context,
                                   IDetection detection)
         {
             if (!CompatibleBrowsers.Contains(detection.Browser.Type.ToString()))
             {
-                httpContext.Response.Redirect("/InCompatibleBrowser.html");
+                context.Response.Redirect("/InCompatibleBrowser.html");
             }
             else
             {
-                await this.next.Invoke(httpContext);
+                await this._next.Invoke(context);
             }
         }
     }
