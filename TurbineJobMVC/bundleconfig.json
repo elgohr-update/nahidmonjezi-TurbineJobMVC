@@ -43,5 +43,11 @@
     "inputFiles": [
       "wwwroot/css/TimeLine.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/validatorFunctions.min.js",
+    "inputFiles": [
+      "wwwroot/js/validatorFunctions.js"
+    ]
   }
 ]
