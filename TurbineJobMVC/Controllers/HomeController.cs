@@ -28,7 +28,7 @@ namespace TurbineJobMVC.Controllers
             return View();
         }
 
-        [HttpPost, AutoValidateAntiforgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         [ValidateDNTCaptcha(ErrorMessage = "لطفا کد امنیتی را وارد نمایید",
                     IsNumericErrorMessage = "مقدار وارد شده می بایست عددی باشد",
                     CaptchaGeneratorLanguage = Language.Persian,
