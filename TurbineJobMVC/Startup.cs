@@ -22,6 +22,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using TurbineJobMVC.AutoMapperSettings;
 using TurbineJobMVC.BuilderExtensions;
 using TurbineJobMVC.CustomMiddleware;
 using TurbineJobMVC.Models;
