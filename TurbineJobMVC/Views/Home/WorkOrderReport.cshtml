@@ -11,14 +11,14 @@
             {
                 <span>
                     <b>@workorderInfo.AskerCode</b>
-                </span><span> درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b> <span> مربوط به اموال </span><b>@workorderInfo.Amval</b> </span>برای انجام به </span>
+                </span><span> درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b><span> به شرح </span><b>@Html.Raw(workorderInfo.NeedDescription)</b> <span> مربوط به اموال </span><b>@workorderInfo.Amval</b> </span>برای انجام به </span>
                 <span>
                     <b>@workorderInfo.OprCode</b>
                 </span><span> ارجاع داده شده است</span>
             }
             else
             {
-                <span><b>@workorderInfo.AskerCode</b></span><span> برای درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b></span></span> <span> مربوط به اموال </span><b>@workorderInfo.Amval</b>
+                <span><b>@workorderInfo.AskerCode</b></span><span> برای درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b></span></span><span> به شرح </span><b>@workorderInfo.NeedDescription</b><span> مربوط به اموال </span><b>@workorderInfo.Amval</b>
                 <span><b>انجام دهنده کار تعیین نشده است</b></span>
             }
         </div>
@@ -76,7 +76,7 @@
         }
         else
         {
-            <div class="alert alert-danger rtl mx-auto">کد رهگیری یا شماره اموال شما معتبر نمی باشد</div>
+            <div class="alert alert-warning rtl mx-auto">تاکنون گزارش به ثبت نرسیده است</div>
             <partial name="footer" />
         }
     }
