@@ -96,7 +96,7 @@ namespace TurbineJobMVC.Services
         }
         public async Task<WorkOrderTBL> IsDublicateNotRateAR(string amval)
         {
-            return await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
+            return await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
         }
         public bool IsNumberic(string number)
         {
