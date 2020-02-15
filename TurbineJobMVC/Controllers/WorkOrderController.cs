@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using TurbineJobMVC.Services;
 
@@ -45,6 +46,12 @@ namespace TurbineJobMVC.Controllers
                 return Ok(workorder);
             else
                 return Ok("false");
+        }
+
+        [HttpGet("GetServerDate")]
+        public ActionResult<DateTime> GetServerDate()
+        {
+            return Ok(DateTime.Now);
         }
     }
 }
