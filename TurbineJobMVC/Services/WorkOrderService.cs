@@ -76,10 +76,14 @@ namespace TurbineJobMVC.Services
             _map.Map<IList<TahvilFormsViewModel>>(await _unitofwork.GetRepository<TahvilForms>().GetAllAsync(predicate: q => q.RegisterNo == regNo, orderBy: q => q.OrderByDescending(c => c.AmvalNo)));
         public async Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono) =>
             _map.Map<IList<WorkOrderDailyReportViewModel>>(await _unitofwork.GetRepository<WorkOrderDailyReportTBL>().GetAllAsync(predicate: q => q.Wono == Convert.ToInt64(Wono), orderBy: q => q.OrderByDescending(c => c.ReportDate)));
-        public async Task<WorkOrderTBL> IsDublicateActiveAR(string amval)=>
+        public WorkOrderTBL IsDublicateActiveAR(string amval)=>
+            _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefault(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate));
+        public async Task<WorkOrderTBL> IsDublicateActiveARAsync(string amval) =>
             await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate));
-        public async Task<WorkOrderTBL> IsDublicateNotRateAR(string amval)=>
-            await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
+        public WorkOrderTBL IsDublicateNotRateAR(string amval) =>
+             _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefault(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
+        public async Task<WorkOrderTBL> IsDublicateNotRateARAsync(string amval)=>
+            await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
         public bool IsNumberic(string number)
         {
             double tempInt = 0;

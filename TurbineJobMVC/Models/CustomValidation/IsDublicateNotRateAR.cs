@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Models.CustomValidation
@@ -23,7 +24,7 @@ namespace TurbineJobMVC.Models.CustomValidation
         {
             if (value == null) return new ValidationResult(ErrorMessage != null ? ErrorMessage : "شماره اموال وجود ندارد");
             var _service = (WorkOrderService)validationContext.GetService(typeof(IWorkOrderService));
-            var workorder = _service.IsDublicateNotRateAR(value.ToString()).Result;
+            var workorder = _service.IsDublicateNotRateAR(value.ToString());
             if (workorder == null)
             {
                 return ValidationResult.Success;

@@ -30,7 +30,7 @@ namespace TurbineJobMVC.Controllers
         [HttpGet("IsDublicateActiveAR/{amval}")]
         public async Task<ActionResult<string>> IsDublicateActiveAR(string amval)
         {
-            var workorder = await _service.WorkOrderService.IsDublicateActiveAR(amval);
+            var workorder = await _service.WorkOrderService.IsDublicateActiveARAsync(amval);
             if (workorder != null)
                 return Ok(workorder);
             else
@@ -40,7 +40,7 @@ namespace TurbineJobMVC.Controllers
         [HttpGet("IsDublicateNotRateAR/{amval}")]
         public async Task<ActionResult<string>> IsDublicateNotRateAR(string amval)
         {
-            var workorder = await _service.WorkOrderService.IsDublicateNotRateAR(amval);
+            var workorder = await _service.WorkOrderService.IsDublicateNotRateARAsync(amval);
             if (workorder != null)
                 return Ok(workorder);
             else
