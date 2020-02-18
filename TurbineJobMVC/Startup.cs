@@ -49,7 +49,15 @@ namespace TurbineJobMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDetection();
-            services.AddCors();
+            services.AddCors(options=>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
+            });
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("TurbineJobMVC");
