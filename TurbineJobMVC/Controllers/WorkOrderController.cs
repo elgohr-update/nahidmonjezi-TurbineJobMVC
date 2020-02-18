@@ -13,7 +13,6 @@ namespace TurbineJobMVC.Controllers
     [ApiController]
     public class WorkOrderController : BaseApiController
     {
-
         public WorkOrderController(
             ILogger<HomeController> logger,
             IMapper map,

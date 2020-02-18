@@ -49,6 +49,7 @@ namespace TurbineJobMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDetection();
+            services.AddCors();
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("TurbineJobMVC");
@@ -132,6 +133,7 @@ namespace TurbineJobMVC
             app.UseResponseCaching();
             app.UseStatusCodePagesWithRedirects("/Home/Error");
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCheckBrowserMiddleware();
@@ -149,7 +151,7 @@ namespace TurbineJobMVC
                         .AddComment("Disallow the rest")
                         .AddUserAgent("*")
                         .AddCrawlDelay(TimeSpan.FromSeconds(10))
-                        .Disallow("/")
+                        .Allow("/")
                 ));
             //.AddSitemap($"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/sitemap.xml"));
             
