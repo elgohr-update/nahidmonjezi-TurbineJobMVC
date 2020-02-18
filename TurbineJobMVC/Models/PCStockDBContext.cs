@@ -16,6 +16,7 @@ namespace TurbineJobMVC.Models
         public DbSet<WorkOrder> WorkOrder { get; set; }
         public DbSet<TahvilForms> TahvilForms { get; set; }
         public DbSet<WorkOrderDailyReportTBL> WorkOrderDailyReportTBL { get; set; }
+        public DbSet<NotEndWorkOrderList> NotEndWorkOrderList { get; set; }
 
         public PCStockDBContext(ILogger<PCStockDBContext> logger, IHttpContextAccessor accessor) : base()
         {
@@ -42,6 +43,7 @@ namespace TurbineJobMVC.Models
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration<WorkOrderTBL>(new WorkOrderTBLConfigure());
             modelBuilder.ApplyConfiguration<WorkOrder>(new BaseViewConfigure<WorkOrder>());
+            modelBuilder.ApplyConfiguration<NotEndWorkOrderList>(new BaseViewConfigure<NotEndWorkOrderList>());
             modelBuilder.ApplyConfiguration<TahvilForms>(new TahvilFormsConfigure());
             modelBuilder.ApplyConfiguration<WorkOrderDailyReportTBL>(new WorkOrderDailyReportTBLConfigure());
         }

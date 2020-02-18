@@ -13,6 +13,7 @@ namespace TurbineJobMVC.AutoMapperSettings
             CreateMap<WorkOrder, WorkOrderViewModel>().ReverseMap();
             CreateMap<TahvilForms, TahvilFormsViewModel>().ReverseMap();
             CreateMap<WorkOrderDailyReportTBL, WorkOrderDailyReportViewModel>().ReverseMap();
+            CreateMap<NotEndWorkOrderList, NotEndWorkOrderListViewModel>().ReverseMap();
         }
 
     }

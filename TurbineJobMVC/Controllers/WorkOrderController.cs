@@ -4,29 +4,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using TurbineJobMVC.Models.ViewModels;
 using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkOrderController : ControllerBase
+    public class WorkOrderController : BaseApiController
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IMapper _map;
-        private readonly IService _service;
-        private readonly IDataProtectionProvider _provider;
+
         public WorkOrderController(
             ILogger<HomeController> logger,
             IMapper map,
             IService service,
             IDataProtectionProvider provider)
-        {
-            _logger = logger;
-            _map = map;
-            _service = service;
-            _provider = provider;
-        }
+        : base(logger, map, service, provider) { }
 
         [HttpGet("IsDublicateActiveAR/{amval}")]
         public async Task<ActionResult<string>> IsDublicateActiveAR(string amval)
@@ -48,10 +41,10 @@ namespace TurbineJobMVC.Controllers
                 return Ok("false");
         }
 
-        [HttpGet("GetServerDate")]
-        public ActionResult<DateTime> GetServerDate()
+        [HttpGet("GetNotEndWorkOrder")]
+        public async Task<ActionResult<NotEndWorkOrderListViewModel>> GetNotEndWorkOrder()
         {
-            return Ok(DateTime.Now);
+            return Ok(await _service.WorkOrderService.GetNotEndWorkOrderList());
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace TurbineJobMVC.Models.Entities
+namespace TurbineJobMVC.Models.ViewModels
 {
-    public class WorkOrder
+    public class NotEndWorkOrderListViewModel
     {
         public string AlarmDate { get; set; }
         public long WONo { get; set; }
@@ -39,5 +43,6 @@ namespace TurbineJobMVC.Models.Entities
         public int ManDays { get; set; }
         public int? CustomerRate { get; set; }
         public double? ManageRate { get; set; }
+        public string LastStatus { get; set; }
     }
 }

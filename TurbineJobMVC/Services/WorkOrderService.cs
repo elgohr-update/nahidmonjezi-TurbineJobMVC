@@ -100,6 +100,10 @@ namespace TurbineJobMVC.Services
             return true;
         }
 
+        public async Task<List<NotEndWorkOrderListViewModel>> GetNotEndWorkOrderList()
+        {
+            return _map.Map<List<NotEndWorkOrderListViewModel>>(await _unitofwork.GetRepository<NotEndWorkOrderList>().GetAllAsync());
+        }
         private async Task<WorkOrderDailyReportViewModel> AddDailyReport(long wono, string ReportComment)
         {
             var repoWorkOrderComment = _unitofwork.GetRepository<WorkOrderDailyReportTBL>();

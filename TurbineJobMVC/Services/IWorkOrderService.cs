@@ -20,6 +20,6 @@ namespace TurbineJobMVC.Services
         Task<WorkOrderTBL> IsDublicateActiveARAsync(string amval);
         WorkOrderTBL IsDublicateNotRateAR(string amval);
         Task<WorkOrderTBL> IsDublicateNotRateARAsync(string amval);
-        
+        Task<List<NotEndWorkOrderListViewModel>> GetNotEndWorkOrderList();
     }
 }
