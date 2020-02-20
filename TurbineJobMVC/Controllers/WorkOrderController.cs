@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TurbineJobMVC.Models.ViewModels;
 using TurbineJobMVC.Services;
@@ -41,9 +42,15 @@ namespace TurbineJobMVC.Controllers
         }
 
         [HttpGet("GetNotEndWorkOrder")]
-        public async Task<ActionResult<NotEndWorkOrderListViewModel>> GetNotEndWorkOrder()
+        public async Task<ActionResult<IList<NotEndWorkOrderListViewModel>>> GetNotEndWorkOrder()
         {
             return Ok(await _service.WorkOrderService.GetNotEndWorkOrderList());
+        }
+
+        [HttpGet("GetWorkOrderReport/{wono}")]
+        public async Task<ActionResult<IList<WorkOrderDailyReportViewModel>>> GetWorkOrderReport(string wono)
+        {
+            return Ok(await _service.WorkOrderService.GetWorkOrderReport(wono));
         }
     }
 }
