@@ -15,7 +15,7 @@ namespace TurbineJobMVC.AutoMapperSettings
             CreateMap<WorkOrder, WorkOrderViewModel>().ReverseMap();
             CreateMap<TahvilForms, TahvilFormsViewModel>().ReverseMap();
             CreateMap<WorkOrderDailyReportTBL, WorkOrderDailyReportViewModel>()
-                .ForMember(q=>q.ReportDate, opt=> opt.MapFrom(q=> new PersianDateTime(q.ReportDate).ToLongDateString()))
+                .ForMember(q=>q.ReportDate, opt=> opt.MapFrom(q=> new PersianDateTime(q.ReportDate).ToLongDateTimeString()))
                 .ReverseMap();
             CreateMap<NotEndWorkOrderList, NotEndWorkOrderListViewModel>().ReverseMap();
         }
