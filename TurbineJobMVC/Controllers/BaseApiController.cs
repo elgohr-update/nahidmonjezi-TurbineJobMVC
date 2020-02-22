@@ -19,17 +19,20 @@ namespace TurbineJobMVC.Controllers
         protected readonly IMapper _map;
         protected readonly IService _service;
         protected readonly IDataProtectionProvider _provider;
+        protected readonly IUserService _userService;
 
         public BaseApiController(
             ILogger<HomeController> logger,
             IMapper map,
             IService service,
-            IDataProtectionProvider provider)
+            IDataProtectionProvider provider,
+            IUserService userService)
         {
             _logger = logger;
             _map = map;
             _service = service;
             _provider = provider;
+            _userService = userService;
         }
     }
 }

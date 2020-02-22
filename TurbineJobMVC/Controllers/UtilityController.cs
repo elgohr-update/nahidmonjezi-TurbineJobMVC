@@ -19,8 +19,9 @@ namespace TurbineJobMVC.Controllers
             ILogger<HomeController> logger,
             IMapper map,
             IService service,
-            IDataProtectionProvider provider)
-        : base(logger, map, service, provider) { }
+            IDataProtectionProvider provider,
+            IUserService userService)
+        : base(logger, map, service, provider, userService) { }
 
         [HttpGet("GetServerDate")]
         public ActionResult<DateTime> GetServerDate()
