@@ -8,7 +8,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.102
     - name: dotnet Restore
       run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
     - name: Build with dotnet
@@ -45,4 +45,4 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_CHANNEL: "#general" 
-        SLACK_TITLE: "Web Site Published"
+        SLACK_TITLE: "Ticket Web Site Published On Heroku"
