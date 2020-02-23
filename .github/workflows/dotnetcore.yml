@@ -40,7 +40,7 @@ jobs:
         docker push registry.heroku.com/$HEROKU_APP_NAME/web
         curl https://cli-assets.heroku.com/install.sh | sh
         heroku container:release web -a $HEROKU_APP_NAME
-    - name: send Notification to slack
+    - name: Send Notification To Slack
       uses: rtCamp/action-slack-notify@v2.0.0
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
