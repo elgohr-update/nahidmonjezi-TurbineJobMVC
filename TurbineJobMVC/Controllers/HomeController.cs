@@ -29,8 +29,8 @@ namespace TurbineJobMVC.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [ValidateDNTCaptcha(ErrorMessage = "لطفا کد امنیتی را وارد نمایید",
-                    IsNumericErrorMessage = "مقدار وارد شده می بایست عددی باشد",
+        [ValidateDNTCaptcha(
+                    ErrorMessage = "لطفا کد امنیتی را وارد نمایید",
                     CaptchaGeneratorLanguage = Language.Persian,
                     CaptchaGeneratorDisplayMode = DisplayMode.ShowDigits)]
         public async Task<IActionResult> Index(JobViewModel JobModel)
