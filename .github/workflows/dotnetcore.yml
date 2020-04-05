@@ -50,4 +50,4 @@ jobs:
       uses: dhollerbach/github-action-send-message-to-ms-teams@1.0.10
       with:
         webhook: ${{ Teams_WebHook }}
-        message: 'Ticket Web Site Published On Heroku'
+        message: 'Web Site Published On Heroku'
