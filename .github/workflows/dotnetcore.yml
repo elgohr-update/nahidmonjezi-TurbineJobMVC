@@ -8,7 +8,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.201
     - name: dotnet Restore
       run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
     - name: Build with dotnet
@@ -31,7 +31,7 @@ jobs:
     - name: Upload Site On Heroku
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: "turbinejobmvc"
+        HEROKU_APP_NAME: "aiki-ticket-app"
       run: |
         docker info
         docker build -t $HEROKU_APP_NAME -f ./TurbineJobMVC/Dockerfile .
@@ -40,3 +40,14 @@ jobs:
         docker push registry.heroku.com/$HEROKU_APP_NAME/web
         curl https://cli-assets.heroku.com/install.sh | sh
         heroku container:release web -a $HEROKU_APP_NAME
+    - name: Send Notification To Slack
+      uses: rtCamp/action-slack-notify@v2.0.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_CHANNEL: "#general" 
+        SLACK_TITLE: "Ticket Web Site Published On Heroku"
+    - name: Send Notification To Microsoft Teams
+      uses: dhollerbach/github-action-send-message-to-ms-teams@1.0.10
+      with:
+        webhook: ${{ secrets.Teams_WebHook }}
+        message: 'Web Site Published On Heroku'

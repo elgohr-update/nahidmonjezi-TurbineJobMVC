@@ -45,13 +45,15 @@
                                              asp-use-relative-urls="true"
                                              asp-placeholder="کد امنیتی را وارد نمایید"
                                              asp-validation-error-message="کد امنیتی را به صورت عددی وارد نمایید"
-                                             asp-font-name="Shabnam"
+                                             asp-font-name="Shabnam FD"
                                              asp-font-size="25"
                                              asp-fore-color="#2e5cd0"
                                              asp-back-color="#e9ecef"
                                              asp-text-box-class="text-box form-control textInputColor"
                                              asp-text-box-template="<div class='input-group '><span class='input-group-prepend '><span class='input-group-text '><i class='fas fa-lock fa-lg'></i></span></span>{0}</div>"
-                                             asp-validation-message-class="text-danger font-weight-bolder developer-info rounded" asp-refresh-button-class="btn-sm refreshcaptcha" />
+                                             asp-validation-message-class="text-danger font-weight-bolder developer-info rounded" 
+                                             asp-refresh-button-class="btn-sm refreshcaptcha"
+                                             asp-use-noise="false"/>
                             </div>
                             <button type="submit" class="btn btnStyle btn-lg btn-block mt-3"><i class='fas fa-paper-plane fa-lg'></i>&ensp; ارسال درخواست</button>
                         </form>
@@ -77,7 +79,7 @@
                         <div class="row d-none d-md-block">
                             <div class="text-center special-footer font-weight-bold text-black developer-info">
                                 <p class="mb-1">
-                                    <span> مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرایندی - سال @(_service.DateTimeService.ConvertToPersianDateTime(DateTime.Now).Year) </span><br /><span>پشتیبانی فنی:</span><br /><span> <mark><b>ناهید منجزی، محمد مهرنیا</b></mark></span>
+                                    <span> مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرایندی - سال @(_service.DateTimeService.ConvertToPersianDateTime(DateTime.Now).Year) </span><br /><span>پشتیبانی فنی:</span><br /><br /><span> <mark><b>محمد مهرنیا، ناهید منجزی</b></mark></span>
                                 </p>
                             </div>
                         </div>
@@ -89,51 +91,5 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    <script>
-        $.validator.addMethod("isduplicatenotratear", function (value, element, parameters) {
-            var isSuccess;
-            var wono;
-            $.ajax({
-                type: "GET",
-                async: false,
-                url: "api/WorkOrder/IsDublicateNotRateAR/" + value,
-                data: {},
-                dataType: "json",
-                cache: false,
-                success: function (response) {
-                    isSuccess = response.woNo;
-                    wono = response.woNo
-                    
-                }
-            });
-            $.validator.messages.isduplicatenotratear = `برای اموال یک درخواست با کد رهگیری ${wono} ثبت شده که تاییدیه اتمام کار آن توسط شما اعلان نشده است`;
-            return isSuccess === undefined;
-        }, '');
-        $.validator.unobtrusive.adapters.add("isduplicatenotratear", [], function (options) {
-            options.rules.isduplicatenotratear = {};
-        });
-
-        $.validator.addMethod("isdublicateactivear", function (value, element, parameters) {
-            var isSuccess;
-            var wono;
-            $.ajax({
-                type: "GET",
-                async: false,
-                url: "api/WorkOrder/IsDublicateActiveAR/" + value,
-                data: {},
-                dataType: "json",
-                cache: false,
-                success: function (response) {
-                    isSuccess = response.woNo;
-                    wono = response.woNo
-                    
-                }
-            });
-            $.validator.messages.isdublicateactivear = `برای اموال یک درخواست با کد رهگیری ${wono} ثبت شده که همچنان در دست اقدام است`;
-            return isSuccess === undefined;
-        }, '');
-        $.validator.unobtrusive.adapters.add("isdublicateactivear", [], function (options) {
-            options.rules.isdublicateactivear = {};
-        });
-    </script>
+    <script src="~/js/validatorFunctions.min.js" async></script>
 }

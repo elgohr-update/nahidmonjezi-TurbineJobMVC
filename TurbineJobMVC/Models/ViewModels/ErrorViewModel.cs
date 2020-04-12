@@ -1,4 +1,4 @@
-namespace TurbineJobMVC.Models
+namespace TurbineJobMVC.Models.ViewModels
 {
     public class ErrorViewModel
     {

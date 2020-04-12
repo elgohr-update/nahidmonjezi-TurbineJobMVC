@@ -10,7 +10,7 @@
     "inputFiles": [
       "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
       "wwwroot/lib/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css",
-      "wwwroot/lib/shabnam-font/dist/font-face.css",
+      "wwwroot/css/fontiran.css",
       "wwwroot/lib/fontawesome-pro-5.12.0-web/css/solid.min.css",
       "wwwroot/css/site.css",
       "wwwroot/css/TimeLine.min.css",
@@ -42,6 +42,12 @@
     "outputFileName": "wwwroot/css/TimeLine.min.css",
     "inputFiles": [
       "wwwroot/css/TimeLine.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/validatorFunctions.min.js",
+    "inputFiles": [
+      "wwwroot/js/validatorFunctions.js"
     ]
   }
 ]

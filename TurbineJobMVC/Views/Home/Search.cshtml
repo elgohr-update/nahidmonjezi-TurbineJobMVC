@@ -31,7 +31,12 @@
                             <td><i class="@form.Icon"></i></td>
                             <td>@form.PartName</td>
                             <td>@form.AmvalNo</td>
-                            <td><a asp-controller="Home" asp-action="WorkOrderReport" asp-route-WonoSearch="@form.ActiveWono" class="btn btn-link">@form.ActiveWono</a></td>
+                            <td>
+                                @if(form.ActiveWono!=null)
+                                {
+                                <a asp-controller="Home" asp-action="WorkOrderReport" asp-route-WonoSearch="@form.ActiveWono" class="btn btn-link">@form.ActiveWono</a>
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>

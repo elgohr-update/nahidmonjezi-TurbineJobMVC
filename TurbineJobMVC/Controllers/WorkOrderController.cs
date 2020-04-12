@@ -2,35 +2,30 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using TurbineJobMVC.Models.ViewModels;
 using TurbineJobMVC.Services;
 
 namespace TurbineJobMVC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkOrderController : ControllerBase
+    public class WorkOrderController : BaseApiController
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IMapper _map;
-        private readonly IService _service;
-        private readonly IDataProtectionProvider _provider;
         public WorkOrderController(
             ILogger<HomeController> logger,
             IMapper map,
             IService service,
-            IDataProtectionProvider provider)
-        {
-            _logger = logger;
-            _map = map;
-            _service = service;
-            _provider = provider;
-        }
+            IDataProtectionProvider provider,
+            IUserService userService)
+        : base(logger, map, service, provider, userService) { }
 
         [HttpGet("IsDublicateActiveAR/{amval}")]
         public async Task<ActionResult<string>> IsDublicateActiveAR(string amval)
         {
-            var workorder = await _service.WorkOrderService.IsDublicateActiveAR(amval);
+            var workorder = await _service.WorkOrderService.IsDublicateActiveARAsync(amval);
             if (workorder != null)
                 return Ok(workorder);
             else
@@ -40,11 +35,23 @@ namespace TurbineJobMVC.Controllers
         [HttpGet("IsDublicateNotRateAR/{amval}")]
         public async Task<ActionResult<string>> IsDublicateNotRateAR(string amval)
         {
-            var workorder = await _service.WorkOrderService.IsDublicateNotRateAR(amval);
+            var workorder = await _service.WorkOrderService.IsDublicateNotRateARAsync(amval);
             if (workorder != null)
                 return Ok(workorder);
             else
                 return Ok("false");
+        }
+
+        [HttpGet("GetNotEndWorkOrder")]
+        public async Task<ActionResult<IList<NotEndWorkOrderListViewModel>>> GetNotEndWorkOrder()
+        {
+            return Ok(await _service.WorkOrderService.GetNotEndWorkOrderList());
+        }
+
+        [HttpGet("GetWorkOrderReport/{wono}")]
+        public async Task<ActionResult<IList<WorkOrderDailyReportViewModel>>> GetWorkOrderReport(string wono)
+        {
+            return Ok(await _service.WorkOrderService.GetWorkOrderReport(wono));
         }
     }
 }

@@ -16,7 +16,10 @@ namespace TurbineJobMVC.Services
         Task<IList<WorkOrderDailyReportViewModel>> GetWorkOrderReport(string Wono);
         Task<bool> SetWonoVote(long wono);
         bool IsNumberic(string number);
-        Task<WorkOrderTBL> IsDublicateActiveAR(string amval);
-        Task<WorkOrderTBL> IsDublicateNotRateAR(string amval);
+        WorkOrderTBL IsDublicateActiveAR(string amval);
+        Task<WorkOrderTBL> IsDublicateActiveARAsync(string amval);
+        WorkOrderTBL IsDublicateNotRateAR(string amval);
+        Task<WorkOrderTBL> IsDublicateNotRateARAsync(string amval);
+        Task<List<NotEndWorkOrderListViewModel>> GetNotEndWorkOrderList();
     }
 }

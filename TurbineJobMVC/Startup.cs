@@ -1,6 +1,7 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using DNTCaptcha.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Raven.Client.Documents;
 using Raven.Client.Http;
@@ -22,10 +24,13 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using TurbineJobMVC.AutoMapperSettings;
 using TurbineJobMVC.BuilderExtensions;
 using TurbineJobMVC.CustomMiddleware;
 using TurbineJobMVC.Models;
 using TurbineJobMVC.Services;
+using TurbineJobMVC.Settings;
 using Wangkanai.Detection;
 
 namespace TurbineJobMVC
@@ -48,6 +53,17 @@ namespace TurbineJobMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDetection();
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            services.AddCors(options=>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
+            });
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("TurbineJobMVC");
@@ -79,9 +95,31 @@ namespace TurbineJobMVC
             if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
                 services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
 
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddScoped<IWorkOrderService, WorkOrderService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
             services.AddScoped<IService, Service>();
+            services.AddScoped<IUserService, UserService>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -131,6 +169,7 @@ namespace TurbineJobMVC
             app.UseResponseCaching();
             app.UseStatusCodePagesWithRedirects("/Home/Error");
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCheckBrowserMiddleware();
@@ -148,7 +187,7 @@ namespace TurbineJobMVC
                         .AddComment("Disallow the rest")
                         .AddUserAgent("*")
                         .AddCrawlDelay(TimeSpan.FromSeconds(10))
-                        .Disallow("/")
+                        .Allow("/")
                 ));
             //.AddSitemap($"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/sitemap.xml"));
             

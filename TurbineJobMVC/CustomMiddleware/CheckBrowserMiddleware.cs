@@ -18,14 +18,19 @@ namespace TurbineJobMVC.CustomMiddleware
         public async Task InvokeAsync(HttpContext context,
                                   IDetection detection)
         {
-            if (!CompatibleBrowsers.Contains(detection.Browser.Type.ToString()))
+            if (!context.Request.Path.StartsWithSegments("/api"))
             {
-                context.Response.Redirect("/InCompatibleBrowser.html");
+                if (!CompatibleBrowsers.Contains(detection.Browser.Type.ToString()))
+                {
+                    context.Response.Redirect("/InCompatibleBrowser.html");
+                }
+                else
+                {
+                    await this._next.Invoke(context);
+                }
             }
-            else
-            {
-                await this._next.Invoke(context);
-            }
+            else { await this._next.Invoke(context); }
+            
         }
     }
 }

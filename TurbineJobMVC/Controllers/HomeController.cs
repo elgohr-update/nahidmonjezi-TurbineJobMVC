@@ -28,9 +28,9 @@ namespace TurbineJobMVC.Controllers
             return View();
         }
 
-        [HttpPost, AutoValidateAntiforgeryToken]
-        [ValidateDNTCaptcha(ErrorMessage = "لطفا کد امنیتی را وارد نمایید",
-                    IsNumericErrorMessage = "مقدار وارد شده می بایست عددی باشد",
+        [HttpPost, ValidateAntiForgeryToken]
+        [ValidateDNTCaptcha(
+                    ErrorMessage = "لطفا کد امنیتی را وارد نمایید",
                     CaptchaGeneratorLanguage = Language.Persian,
                     CaptchaGeneratorDisplayMode = DisplayMode.ShowDigits)]
         public async Task<IActionResult> Index(JobViewModel JobModel)
@@ -58,7 +58,7 @@ namespace TurbineJobMVC.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
         }
 
@@ -81,14 +81,14 @@ namespace TurbineJobMVC.Controllers
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {
             WorkOrderViewModel workOrder = null;
-            if (!_service.WorkOrderService.IsNumberic(WonoSearch)) return BadRequest();
+            if (!_service.WorkOrderService.IsNumberic(WonoSearch)) return BadRequest(ModelState);
             workOrder = await _service.WorkOrderService.ChooseSingleWorkOrderByAROrWono(WonoSearch);
             if (workOrder != null)
             {
                 ViewData["WorkOrderInfo"] = workOrder;
                 return View(await _service.WorkOrderService.GetWorkOrderReport(workOrder.WONo.ToString()));
             }
-            else return BadRequest();
+            else return BadRequest(ModelState);
             
         }
         public async Task<IActionResult> GetVote(long Vote_Wono)
@@ -96,7 +96,7 @@ namespace TurbineJobMVC.Controllers
             if (await _service.WorkOrderService.SetWonoVote(Vote_Wono))
                 return View();
             else
-                return BadRequest();
+                return BadRequest(ModelState);
         }
     }
 }
