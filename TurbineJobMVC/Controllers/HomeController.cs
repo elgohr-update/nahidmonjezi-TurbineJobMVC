@@ -77,6 +77,19 @@ namespace TurbineJobMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult SelectAction(string txtSearch)
+                    
+          {
+            if (txtSearch.Length < 7)
+            {
+                return RedirectToAction("Search", new { id = txtSearch.ToString() });
+            }
+
+            else {
+                return RedirectToAction("WorkOrderReport", new { WonoSearch = txtSearch.ToString() });
+            }
+        }
+
 
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {
