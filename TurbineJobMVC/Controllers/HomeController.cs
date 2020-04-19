@@ -82,11 +82,11 @@ namespace TurbineJobMVC.Controllers
           {
             if (txtSearch.Length < 7)
             {
-                return RedirectToAction("Search", new { id = txtSearch.ToString() });
+                return RedirectToAction("Search", new { id = txtSearch });
             }
 
             else {
-                return RedirectToAction("WorkOrderReport", new { WonoSearch = txtSearch.ToString() });
+                return RedirectToAction("WorkOrderReport", new { WonoSearch = txtSearch });
             }
         }
 
