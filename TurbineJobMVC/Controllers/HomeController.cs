@@ -23,10 +23,25 @@ namespace TurbineJobMVC.Controllers
             IMapper map,
             IService service,
             IDataProtectionProvider provider) : base(logger, map, service, provider) { }
-        public IActionResult Index()
+
+        [HttpGet]
+        public IActionResult Index(bool isDefaulAR)
         {
+
             return View();
         }
+
+        [HttpGet]
+        public IActionResult IndexByAR(string id)
+        {
+            return View("Index", new JobViewModel { AR = id, defaultAR=true });
+        }
+        [HttpGet]
+        public IActionResult IndexByARConflict(string id)
+        {
+            return View("Index", new JobViewModel { AR = id, Description ="شماره اموال مغایرت دارد.", defaultAR = true , defaultDes=true});
+        }
+
 
         [HttpPost, ValidateAntiForgeryToken]
         [ValidateDNTCaptcha(
