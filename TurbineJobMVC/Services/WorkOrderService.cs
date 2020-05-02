@@ -119,5 +119,10 @@ namespace TurbineJobMVC.Services
             await _unitofwork.SaveChangesAsync();
             return _map.Map<WorkOrderDailyReportViewModel>(workOrderReport);
         }
+
+        public async Task<IList<WorkOrderViewModel>> WorkOrderArchive(string AR)=>
+        _map.Map<IList<WorkOrderViewModel>>(await _unitofwork.GetRepository<WorkOrder>().GetAllAsync(predicate: q => q.Amval == AR &&  !(string.IsNullOrEmpty(q.EndJobDate))));
+        
+
     }
 }

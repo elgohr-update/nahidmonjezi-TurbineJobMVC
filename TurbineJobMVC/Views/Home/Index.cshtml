@@ -18,11 +18,11 @@
                                     </div>
                                     @if (Model != null && Model.defaultAR)
                                     {
-                                        <input type="text" class="form-control ltr textInputColor" asp-for="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1" disabled="disabled">
+                                        <input type="text" class="form-control ltr textInputColor" asp-for="AR" id="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1" readonly="readonly">
                                     }
                                     else
                                     {
-                                        <input type="text" class="form-control ltr textInputColor" asp-for="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1">
+                                        <input type="text" class="form-control ltr textInputColor" asp-for="AR" id="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1">
                                     }
                                     <span class="invalid-feedback text-left d-block text-danger font-weight-bolder developer-info rounded" asp-validation-for="AR"></span>
                                 </div>
@@ -34,10 +34,11 @@
                                     </div>
                                     @if (Model != null && Model.defaultDes)
                                     {
-                                        <textarea type="text" id="1AR" class="form-control textInputColor " asp-for="Description" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8" disabled="disabled"></textarea>
+                                        <textarea type="text" id="1AR" class="form-control textInputColor " asp-for="Description" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8" readonly="readonly"></textarea>
                                     }
                                     else
                                     {
+
                                         <textarea type="text" id="1AR" class="form-control textInputColor " asp-for="Description" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8"></textarea>
                                     }
 

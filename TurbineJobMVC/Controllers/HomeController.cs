@@ -41,7 +41,12 @@ namespace TurbineJobMVC.Controllers
         {
             return View("Index", new JobViewModel { AR = id, Description ="شماره اموال مغایرت دارد.", defaultAR = true , defaultDes=true});
         }
+        [HttpGet]
+        public async Task<IActionResult> ArchiveWorkOrder(string id)
+        {
 
+            return View( await _service.WorkOrderService.WorkOrderArchive(id));
+        }
 
         [HttpPost, ValidateAntiForgeryToken]
         [ValidateDNTCaptcha(
