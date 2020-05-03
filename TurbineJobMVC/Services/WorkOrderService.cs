@@ -54,15 +54,12 @@ namespace TurbineJobMVC.Services
 
         public async Task<WorkOrderViewModel> ChooseSingleWorkOrderByAROrWono(string code)
         {
-            if (code.Substring(0,4) == PersianDateTime.Now.Year.ToString())
-                return await GetSingleWorkOrder(code);
-            else if (code.Length > 8)
-            {
-                return await GetSingleWorkOrderByAR(code);
-            }
+            var founded = await GetSingleWorkOrder(code).ConfigureAwait(false);
+            if (founded != null)
+            { return founded; }
             else
             {
-                return null;
+                return await GetSingleWorkOrderByAR(code);
             }
         }
 
@@ -119,5 +116,10 @@ namespace TurbineJobMVC.Services
             await _unitofwork.SaveChangesAsync();
             return _map.Map<WorkOrderDailyReportViewModel>(workOrderReport);
         }
+
+        public async Task<IList<WorkOrderViewModel>> WorkOrderArchive(string AR)=>
+        _map.Map<IList<WorkOrderViewModel>>(await _unitofwork.GetRepository<WorkOrder>().GetAllAsync(predicate: q => q.Amval == AR &&  !(string.IsNullOrEmpty(q.EndJobDate))));
+        
+
     }
 }

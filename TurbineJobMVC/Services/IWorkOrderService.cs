@@ -21,5 +21,6 @@ namespace TurbineJobMVC.Services
         WorkOrderTBL IsDublicateNotRateAR(string amval);
         Task<WorkOrderTBL> IsDublicateNotRateARAsync(string amval);
         Task<List<NotEndWorkOrderListViewModel>> GetNotEndWorkOrderList();
+        Task<IList<WorkOrderViewModel>> WorkOrderArchive(string AR);
     }
 }
