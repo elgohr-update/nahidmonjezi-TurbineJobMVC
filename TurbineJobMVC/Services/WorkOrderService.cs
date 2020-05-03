@@ -54,15 +54,12 @@ namespace TurbineJobMVC.Services
 
         public async Task<WorkOrderViewModel> ChooseSingleWorkOrderByAROrWono(string code)
         {
-            if (code.Substring(0,4) == PersianDateTime.Now.Year.ToString())
-                return await GetSingleWorkOrder(code);
-            else if (code.Length > 8)
-            {
-                return await GetSingleWorkOrderByAR(code);
-            }
+            var founded = await GetSingleWorkOrder(code);
+            if (founded!=null)
+                return founded;
             else
             {
-                return null;
+                return await GetSingleWorkOrderByAR(code);
             }
         }
 
