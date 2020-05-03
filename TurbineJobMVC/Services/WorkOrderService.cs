@@ -54,9 +54,9 @@ namespace TurbineJobMVC.Services
 
         public async Task<WorkOrderViewModel> ChooseSingleWorkOrderByAROrWono(string code)
         {
-            var founded = await GetSingleWorkOrder(code);
-            if (founded!=null)
-                return founded;
+            var founded = await GetSingleWorkOrder(code).ConfigureAwait(false);
+            if (founded != null)
+            { return founded; }
             else
             {
                 return await GetSingleWorkOrderByAR(code);
