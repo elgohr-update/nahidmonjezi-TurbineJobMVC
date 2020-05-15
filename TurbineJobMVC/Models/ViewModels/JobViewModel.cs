@@ -28,5 +28,9 @@ namespace TurbineJobMVC.Models.ViewModels
 
         [Display(Name = "شرح نیاز")]
         public string NeedDescription => $"{Description}\r\n(شماره تماس:{PhoneNumber})";
+        [NotMapped]
+        public bool defaultAR { get; set; }
+        [NotMapped]
+        public bool defaultDes { get; set; }
     }
 }

@@ -22,22 +22,40 @@
                         <th class="border border-white text-center" scope="col">نوع</th>
                         <th class="border border-white text-center" scope="col">شماره اموال</th>
                         <th class="border border-white text-center" scope="col">درخواست فعال</th>
+                        <th class="border border-white text-center" scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var form in Model)
                     {
-                        <tr class="border border-white">
-                            <td><i class="@form.Icon"></i></td>
-                            <td>@form.PartName</td>
-                            <td>@form.AmvalNo</td>
-                            <td>
-                                @if(form.ActiveWono!=null)
-                                {
+                    <tr class="border border-white">
+                        <td><i class="@form.Icon"></i></td>
+                        <td class="rtl">@form.PartName</td>
+                        <td>@form.AmvalNo</td>
+                        <td>
+                            @if (form.ActiveWono != null)
+                            {
                                 <a asp-controller="Home" asp-action="WorkOrderReport" asp-route-WonoSearch="@form.ActiveWono" class="btn btn-link">@form.ActiveWono</a>
+                            }
+                        </td>
+                        <td>
+                           
+                            <div class="btn-group" role="group">
+                                @if (form.ActiveWono == null)
+
+                                {
+                                    <a type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="ثبت درخواست کار جدید" asp-controller="Home" asp-action="IndexByAR" asp-route-id="@form.AmvalNo"><i class="fas fa-user-edit fa-lg"></i></a>
+                                    <a type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="در صورت مشاهده مغایرت در لیست اموال تحت اختیار، جهت ثبت درخواست بررسی کلیک نمایید." asp-controller="Home" asp-action="IndexByARConflict" asp-route-id="@form.AmvalNo" ><i class="fas fa-exclamation-circle fa-lg"></i></a>
+                                 }
+
+                                @if (form.HasArchive ?? default(bool))
+                                {
+                                    <a  target="_blank" type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="مشاهده سابقه درخواست ها"  asp-controller="Home" asp-action="ArchiveWorkOrder" asp-route-id="@form.AmvalNo"><i class="fas fa-archive fa-lg"></i></a>
                                 }
-                            </td>
-                        </tr>
+                            </div>
+                            
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

@@ -23,9 +23,29 @@ namespace TurbineJobMVC.Controllers
             IMapper map,
             IService service,
             IDataProtectionProvider provider) : base(logger, map, service, provider) { }
-        public IActionResult Index()
+
+        [HttpGet]
+        public IActionResult Index(bool isDefaulAR)
         {
+
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult IndexByAR(string id)
+        {
+            return View("Index", new JobViewModel { AR = id, defaultAR=true });
+        }
+        [HttpGet]
+        public IActionResult IndexByARConflict(string id)
+        {
+            return View("Index", new JobViewModel { AR = id, Description ="شماره اموال مغایرت دارد.", defaultAR = true , defaultDes=true});
+        }
+        [HttpGet]
+        public async Task<IActionResult> ArchiveWorkOrder(string id)
+        {
+
+            return View( await _service.WorkOrderService.WorkOrderArchive(id));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -77,6 +97,19 @@ namespace TurbineJobMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult SelectAction(string txtSearch)
+                    
+          {
+            if (txtSearch.Length < 7)
+            {
+                return RedirectToAction("Search", new { id = txtSearch });
+            }
+
+            else {
+                return RedirectToAction("WorkOrderReport", new { WonoSearch = txtSearch });
+            }
+        }
+
 
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {

@@ -1,5 +1,6 @@
 ﻿@inject IService  _service
 @model JobViewModel
+
 @{
     ViewData["Title"] = "فرم ارسال درخواست خدمات رایانه ای";
 }
@@ -15,7 +16,14 @@
                                     <div class="input-group-prepend ">
                                         <label class="input-group-text" id="basic-addon1"><i class="fas fa-lg fa-desktop"></i></label>
                                     </div>
-                                    <input type="text" class="form-control ltr textInputColor" asp-for="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1">
+                                    @if (Model != null && Model.defaultAR)
+                                    {
+                                        <input type="text" class="form-control ltr textInputColor" asp-for="AR" id="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1" readonly="readonly">
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control ltr textInputColor" asp-for="AR" id="AR" placeholder="شماره اموال را وارد کنید مثال: 2142020025" aria-label="amval" aria-describedby="basic-addon1">
+                                    }
                                     <span class="invalid-feedback text-left d-block text-danger font-weight-bolder developer-info rounded" asp-validation-for="AR"></span>
                                 </div>
                             </div>
@@ -24,7 +32,16 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" id="basic-addon1"><i class="fas fa-lg fa-th-list"></i></label>
                                     </div>
-                                    <textarea type="text" class="form-control textInputColor" asp-for="Description" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8"></textarea>
+                                    @if (Model != null && Model.defaultDes)
+                                    {
+                                        <textarea type="text" id="1AR" class="form-control textInputColor " asp-for="Description" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8" readonly="readonly"></textarea>
+                                    }
+                                    else
+                                    {
+
+                                        <textarea type="text" id="1AR" class="form-control textInputColor " asp-for="Description" placeholder="شرح درخواست را وارد کنید" aria-label="Description" aria-describedby="basic-addon1" rows="8"></textarea>
+                                    }
+
                                     <span class="invalid-feedback text-left d-block text-danger font-weight-bolder developer-info rounded" asp-validation-for="Description"></span>
                                 </div>
                             </div>
@@ -51,9 +68,9 @@
                                              asp-back-color="#e9ecef"
                                              asp-text-box-class="text-box form-control textInputColor"
                                              asp-text-box-template="<div class='input-group '><span class='input-group-prepend '><span class='input-group-text '><i class='fas fa-lock fa-lg'></i></span></span>{0}</div>"
-                                             asp-validation-message-class="text-danger font-weight-bolder developer-info rounded" 
+                                             asp-validation-message-class="text-danger font-weight-bolder developer-info rounded"
                                              asp-refresh-button-class="btn-sm refreshcaptcha"
-                                             asp-use-noise="false"/>
+                                             asp-use-noise="false" />
                             </div>
                             <button type="submit" class="btn btnStyle btn-lg btn-block mt-3"><i class='fas fa-paper-plane fa-lg'></i>&ensp; ارسال درخواست</button>
                         </form>
