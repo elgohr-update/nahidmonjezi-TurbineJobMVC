@@ -142,8 +142,8 @@ textarea{
 }
 
 #searchGrid > .btn-group-sm > .btn, .btn-sm {
-    line-height: 0.75 !important;
-    padding: 0 !important;
+    line-height: 0.75 ;
+    padding: 0 ;
 }
 
 #searchGrid > .table td, .table th {
