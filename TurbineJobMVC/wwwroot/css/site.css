@@ -122,3 +122,34 @@ ol li {
 textarea{
     resize:none;
 }
+
+.btn-custom{
+    border-width:0;
+    outline:none;
+    background-color:transparent;
+    color:dodgerblue;
+}
+
+
+.btn-custom:hover {
+    border-width: 0;
+    outline: none;
+    border-radius: 7px;
+    background-color: #c2e1c9;
+    color: dodgerblue;
+    transition: background-color .3s;
+   
+}
+
+#searchGrid > .btn-group-sm > .btn, .btn-sm {
+    line-height: 0.75 !important;
+    padding: 0 !important;
+}
+
+#searchGrid > .table td, .table th {
+    padding: .5rem;
+}
+
+.btn-link {
+    text-decoration: none !important;
+}

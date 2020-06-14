@@ -114,11 +114,14 @@ namespace TurbineJobMVC.Controllers
         public async Task<IActionResult> WorkOrderReport(string WonoSearch)
         {
             WorkOrderViewModel workOrder = null;
+            ViewData["searchKey"] = WonoSearch;
             if (!_service.WorkOrderService.IsNumberic(WonoSearch)) return BadRequest(ModelState);
             workOrder = await _service.WorkOrderService.ChooseSingleWorkOrderByAROrWono(WonoSearch);
             if (workOrder != null)
             {
+               
                 ViewData["WorkOrderInfo"] = workOrder;
+                
                 return View(await _service.WorkOrderService.GetWorkOrderReport(workOrder.WONo.ToString()));
             }
             else return BadRequest(ModelState);

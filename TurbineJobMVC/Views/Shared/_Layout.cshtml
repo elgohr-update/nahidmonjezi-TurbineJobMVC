@@ -24,7 +24,8 @@
             <a class="navbar-brand menu text-wrap" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Image/Naft-Transparent-02.png" height="40" width="50" alt="مدیریت تعمیرات تجهیزات و ماشین آلات فرآیندی" />سامانه <mark>ثبت درخواست رایانه ای</mark> مدیریت تعمیرات تجهیزات صنعتی و ماشین آلات فرآیندی</a>
             <form class="form-inline my-auto d-inline col-md-2 col-sm-10 d-none d-sm-none d-md-block" asp-controller="Home" asp-action="SelectAction" method="get">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="txtWonoSearch" name="txtSearch" placeholder="رهگیری درخواست" data-toggle="tooltip" title="جهت پیگیری آخرین وضعیت درخواست ارسالی کد رهگیری  یا شماره اموال را اینجا وارد نمایید">
+                    
+                    <input type="text" class="form-control ltr" id="txtWonoSearch"  name="txtSearch" value="@ViewData["searchKey"]" placeholder="رهگیری درخواست" data-toggle="tooltip" title="جهت پیگیری آخرین وضعیت درخواست ارسالی کد رهگیری  یا شماره اموال را اینجا وارد نمایید">                    
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-success">
                             <i class="fas fa-paper-plane"></i>
@@ -62,6 +63,13 @@
     <script src="~/js/fontawesome.min.js" async></script>
     <script src="~/lib/toastr/build/toastr.min.js" async></script>
     <script src="~/js/site.js" asp-append-version="true" async></script>
+    @*<script>
+        $(document).ready(function () {
+            if ((new URL(window.location.href)).searchParams.get("WonoSearch")!="")
+                $("#txtWonoSearch").val((new URL(window.location.href)).searchParams.get("WonoSearch"));
+        })
+    </script>*@
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
