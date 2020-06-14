@@ -210,7 +210,7 @@ namespace TurbineJobMVC
             {
                 Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
                 Database = Configuration.GetSection("RavenDBSettings:CollectionName").Value,
-                Certificate = logServerCertificate
+                Certificate = Configuration.GetSection("RavenDBSettings:Server").Value.ToString().Substring(0, 4) == "https" ? logServerCertificate : null
             };
             docStore.Initialize();
             return docStore;
