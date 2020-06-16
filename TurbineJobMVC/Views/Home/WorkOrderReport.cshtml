@@ -21,9 +21,12 @@
                 <span><b>@workorderInfo.AskerCode</b></span><span> برای درخواست شما<span> به کد رهگیری <b>@workorderInfo.WONo</b></span></span><span> به شرح </span><b>@workorderInfo.NeedDescription</b><span> مربوط به اموال </span><b>@workorderInfo.Amval</b>
                 <span><b>انجام دهنده کار تعیین نشده است</b></span>
             }
+            <button type="button" onClick="history.go(0)" class="btn-custom"> <i class="fas fa-sync-alt"></i> بروزرسانی آخرین وضعیت</button>
         </div>
     </div>
-    @if (workorderInfo.CustomerRate == null && workorderInfo.OprCode!="انجام دهنده تعيين نشده")
+
+    
+    @if (workorderInfo.CustomerRate == null && workorderInfo.OprCode != "انجام دهنده تعيين نشده")
     {
         <div class="row">
             <div class="alert alert-primary mx-auto">
@@ -33,7 +36,7 @@
                 </form>
             </div>
         </div>
-   }
+    }
 }
 
 <div class="row ltr">
