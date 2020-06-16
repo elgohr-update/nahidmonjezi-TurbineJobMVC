@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Wangkanai.Detection;
 
 namespace TurbineJobMVC
 {
-    public class c
+    public class Program
     {
         public static void Main(string[] args)
         {
