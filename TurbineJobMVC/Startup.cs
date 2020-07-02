@@ -168,7 +168,7 @@ namespace TurbineJobMVC
                     .Enrich.FromLogContext()
                     .MinimumLevel.Debug()
                     .WriteTo.Console()
-                    .WriteTo.RavenDB(CreateRavenDocStore())
+                    .WriteTo.RavenDB(CreateRavenDocStore(),errorExpiration:TimeSpan.FromDays(90))
                     .CreateLogger();
                 app.Use(async (httpContext, next) =>  
                 {  
@@ -233,13 +233,13 @@ namespace TurbineJobMVC
             {
                 Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
                 Database = Configuration.GetSection("RavenDBSettings:CollectionName").Value,
-                Certificate = Configuration.GetSection("RavenDBSettings:Server").Value.ToString().Substring(0, 4) == "https" ? logServerCertificate : null
+                Certificate = logServerCertificate
             };
             docStore.Initialize();
             return docStore;
         }
 
-        private bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        private static bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
         {
             return true;
         }
