@@ -29,8 +29,8 @@
 
   <ItemGroup>
     <PackageReference Include="Audit.EntityFramework.Core" Version="15.2.2" />
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="DNTCaptcha.Core" Version="2.5.0" />
     <PackageReference Include="MD.PersianDateTime.Standard" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
@@ -43,7 +43,7 @@
     <PackageReference Include="RobotsTxtCore" Version="1.1.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.RavenDB" Version="3.0.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
     <PackageReference Include="Wangkanai.Detection" Version="2.0.0" />
   </ItemGroup>
 
