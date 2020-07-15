@@ -57,10 +57,7 @@ namespace TurbineJobMVC.Services
             var founded = await GetSingleWorkOrder(code).ConfigureAwait(false);
             if (founded != null)
             { return founded; }
-            else
-            {
-                return await GetSingleWorkOrderByAR(code);
-            }
+            return await GetSingleWorkOrderByAR(code);
         }
 
         public async Task<WorkOrderViewModel> GetSingleWorkOrder(string Wono) =>
@@ -83,8 +80,7 @@ namespace TurbineJobMVC.Services
             await _unitofwork.GetRepository<WorkOrderTBL>().GetFirstOrDefaultAsync(predicate: q => q.Amval == amval && String.IsNullOrEmpty(q.EndJobDate) && q.CustomerRate == null);
         public bool IsNumberic(string number)
         {
-            double tempInt = 0;
-            return double.TryParse(number, out tempInt);
+            return double.TryParse(number, out _);
         }
 
         public async Task<bool> SetWonoVote(long wono)
