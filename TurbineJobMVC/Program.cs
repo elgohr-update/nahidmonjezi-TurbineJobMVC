@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Wangkanai.Detection;
+using Serilog;
 
 namespace TurbineJobMVC
 {
-    public class c
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -21,6 +20,7 @@ namespace TurbineJobMVC
                 configApp.AddEnvironmentVariables(prefix: "ASPNETCORE_");
                 configApp.AddCommandLine(args);
             })
+            .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();

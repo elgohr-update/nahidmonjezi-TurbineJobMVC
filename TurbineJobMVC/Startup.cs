@@ -17,21 +17,22 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Raven.Client.Documents;
 using Raven.Client.Http;
-using Raven.StructuredLog;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Context;
 using TurbineJobMVC.AutoMapperSettings;
 using TurbineJobMVC.BuilderExtensions;
-using TurbineJobMVC.CustomMiddleware;
 using TurbineJobMVC.Models;
 using TurbineJobMVC.Services;
 using TurbineJobMVC.Settings;
-using Wangkanai.Detection;
 
 namespace TurbineJobMVC
 {
@@ -47,7 +48,6 @@ namespace TurbineJobMVC
 
         public IConfiguration Configuration { get; }
         private IHostEnvironment hostEnvironment { get; }
-        private IHttpContextAccessor _httpContextAccessor { get; }
         private X509Certificate2 logServerCertificate;
 
         public void ConfigureServices(IServiceCollection services)
@@ -92,10 +92,6 @@ namespace TurbineJobMVC
                 action.Providers.Add<BrotliCompressionProvider>();
                 action.Providers.Add<GzipCompressionProvider>();
             });
-            if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
-                services.AddLogging(builder => builder.AddRavenStructuredLogger(this.CreateRavenDocStore()));
-
-            // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
@@ -125,7 +121,7 @@ namespace TurbineJobMVC
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             var mimeTypeProvider = new FileExtensionContentTypeProvider();
 
@@ -158,13 +154,35 @@ namespace TurbineJobMVC
 
                     var fileNameToTry = ctx.File.Name.Substring(0, ctx.File.Name.Length - 3);
 
-                    if (mimeTypeProvider.TryGetContentType(fileNameToTry, out var mimeType))
-                    {
-                        headers.Add("Content-Encoding", "gzip");
-                        headers["Content-Type"] = mimeType;
-                    }
+                    if (!mimeTypeProvider.TryGetContentType(fileNameToTry, out var mimeType)) return;
+                    headers.Add("Content-Encoding", "gzip");
+                    headers["Content-Type"] = mimeType;
                 }
             });
+            if (Convert.ToBoolean(Configuration.GetSection("RavenDBSettings:Enabled").Value))
+            {
+                Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+                Serilog.Debugging.SelfLog.Enable(Console.Error);
+
+                Log.Logger  = new LoggerConfiguration()
+                    .Enrich.FromLogContext()
+                    .MinimumLevel.Debug()
+                    .WriteTo.Console()
+                    .WriteTo.RavenDB(CreateRavenDocStore(),errorExpiration:TimeSpan.FromDays(90))
+                    .CreateLogger();
+                app.Use(async (httpContext, next) =>  
+                {  
+                    var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";  
+                    LogContext.PushProperty("User", username);  
+                    var ip = httpContext.Connection.RemoteIpAddress.ToString();
+                    LogContext.PushProperty("IP", !String.IsNullOrWhiteSpace(ip) ? ip : "unknown");  
+                  
+                    await next.Invoke();  
+                });  
+            
+                loggerFactory.AddSerilog();
+                Log.Information("Startup");
+            }
             app.UseSession();
             app.UseResponseCaching();
             app.UseStatusCodePagesWithRedirects("/Home/Error");
@@ -190,7 +208,7 @@ namespace TurbineJobMVC
                         .Allow("/")
                 ));
             //.AddSitemap($"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/sitemap.xml"));
-            
+            app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -202,21 +220,26 @@ namespace TurbineJobMVC
         private IDocumentStore CreateRavenDocStore()
         {
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
-            if (hostEnvironment.IsDevelopment())
-                logServerCertificate = new X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/free.aiki.client.certificate.with.password.pfx", "D7511C44414CAA552B425F39DAE8CA6");
+            if (!hostEnvironment.IsDevelopment())
+                logServerCertificate =
+                    new X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/TurbineJobLogs.pfx",
+                        "Mveyma6303$");
             else
-                logServerCertificate = new X509Certificate2($"{hostEnvironment.ContentRootPath}/wwwroot/certificate/TurbineJobLogs.pfx", "Mveyma6303$");
+                logServerCertificate =
+                    new X509Certificate2(
+                        $"{hostEnvironment.ContentRootPath}/wwwroot/certificate/TurbineJobMVC.pfx",
+                        "Mveyma6303$");
             var docStore = new DocumentStore
             {
                 Urls = new[] { Configuration.GetSection("RavenDBSettings:Server").Value },
                 Database = Configuration.GetSection("RavenDBSettings:CollectionName").Value,
-                Certificate = Configuration.GetSection("RavenDBSettings:Server").Value.ToString().Substring(0, 4) == "https" ? logServerCertificate : null
+                Certificate = logServerCertificate
             };
             docStore.Initialize();
             return docStore;
         }
 
-        private bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        private static bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
         {
             return true;
         }
