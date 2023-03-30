@@ -21,7 +21,7 @@ jobs:
         name: webapp
         path: bin/Release/netcoreapp3.1/publish
     - name: Docker Publish
-      uses: elgohr/Publish-Docker-Github-Action@2.11
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: aikico/turbinejobmvc
         username: ${{ secrets.DOCKER_USERNAME }}
